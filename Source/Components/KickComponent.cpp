@@ -19,7 +19,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     _decaySlider("Decay", apvts, "KICK_DECAY"),
     _driveSlider("Drive", apvts, "KICK_DRIVE"),
     _noiseSlider("Noise", apvts, "KICK_NOISE"),
-    _trigger("Trigger")
+    _trigger("Trigger (C2)")
 {
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
@@ -44,7 +44,7 @@ KickComponent::~KickComponent()
 
 void KickComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colours::grey);   // clear the background
+    g.fillAll (juce::Colours::grey);
 }
 
 void KickComponent::resized()

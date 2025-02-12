@@ -23,8 +23,11 @@ void DrumOscillator::process (const juce::dsp::ProcessContextReplacing<float>& c
         float envelopeValue = std::max(0.0f, (_envelopeSamples-_envelopeCounter)/(_envelopeSamples));
         envelopeValue = std::pow(envelopeValue, _decayShape);
         _envelopeCounter++;
-        float value = std::sin(_phase.advance(baseIncrement*_frequency*envelopeValue)-juce::MathConstants<float>::pi)*envelopeValue*_waveValue;
-        
+        float value = 0.0f;
+        if(_useWave) {
+            value = std::sin(_phase.advance(baseIncrement*_frequency*envelopeValue)-juce::MathConstants<float>::pi)*envelopeValue;
+        }
+
         for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
             outputBuffer.setSample(c, s, value+(_random.nextFloat()*_noiseLevel-_noiseLevel/2)*envelopeValue);
         }
@@ -58,6 +61,10 @@ void DrumOscillator::setNoiseLevel(float noiseLevel) {
     _noiseLevel = noiseLevel;
 }
 
-void DrumOscillator::setWaveValue(float value) {
-    _waveValue = value;
+void DrumOscillator::setUseWave(bool value) {
+    _useWave = value;
+}
+
+void DrumOscillator::setDecayShape(float shape) {
+    _decayShape = shape;
 }

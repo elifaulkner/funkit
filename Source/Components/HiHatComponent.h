@@ -35,7 +35,8 @@ private:
     LabeledSlider _decaySlider;
     LabeledSlider _driveSlider;
     LabeledSlider _noiseSlider;
-    
+    LabeledSlider _shapeSlider;
+
     juce::TextButton _trigger;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HiHatComponent)
 };

@@ -21,7 +21,8 @@ class DrumOscillator {
     void setFrequency(float frequency);
     void setDecay(float decay);
     void setNoiseLevel(float noiseLevel);
-    void setWaveValue(float value);
+    void setUseWave(bool value);
+    void setDecayShape(float shape);
     void reset();
     
     private:
@@ -33,7 +34,7 @@ class DrumOscillator {
     float _frequency = 10.0f;
     float _envelopeCounter = 0.0;
     int _envelopeSamples = 0.0;
-    float _waveValue = 1.0;
+    bool _useWave = true;
     float _noiseLevel = 0.0;
     juce::Random _random;
 };

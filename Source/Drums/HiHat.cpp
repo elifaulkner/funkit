@@ -29,7 +29,7 @@ void HiHat::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     _drum.prepare(spec);
     _drum.setDecay(_params.getDecay());
     _drum.setNoiseLevel(_params.getNoiseLevel());
-    _drum.setWaveValue(0);
+    _drum.setUseWave(false);
     
     _gain.prepare(spec);
     _gain.setGainLinear(0.5f);
@@ -37,7 +37,7 @@ void HiHat::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     _filter.prepare(spec);
     
     _filter.setEnabled(true);
-    _filter.setMode(juce::dsp::LadderFilterMode::LPF24);
+    _filter.setMode(juce::dsp::LadderFilterMode::HPF24);
     _filter.setDrive(1.0f);
     _filter.setResonance(0.0f);
     _filter.setCutoffFrequencyHz(500.0f);
@@ -123,7 +123,9 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> HiHatParameters::getPar
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_DECAY", "Decay", juce::NormalisableRange<float> {0.01f, 1.0f, 0.01f}, 0.15f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_LEVEL", "Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.8f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_LEVEL", "Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.6f));
+
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_SHAPE", "Shape", juce::NormalisableRange<float> {1.00f, 5.0f, 0.1f}, 2.0f));
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_DRIVE", "Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
 
@@ -135,6 +137,7 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> HiHatParameters::getPar
 void HiHat::setUpParameters() {
     _drum.setDecay(_params.getDecay());
     _drum.setNoiseLevel(_params.getNoiseLevel());
+    _drum.setDecayShape(_params.getShape());
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());
 }
@@ -152,8 +155,7 @@ float HiHatParameters::getDecay() {
 }
  
 float HiHatParameters::getLevel() {
-    return _apvts.getRawParameterValue("HIHAT_LEVEL")->load();
-}
+    return _apvts.getRawParameterValue("HIHAT_LEVEL")->load();}
 
 float HiHatParameters::getDrive() {
     return _apvts.getRawParameterValue("HIHAT_DRIVE")->load();
@@ -161,4 +163,8 @@ float HiHatParameters::getDrive() {
 
 float HiHatParameters::getNoiseLevel() {
     return _apvts.getRawParameterValue("HIHAT_NOISE")->load();
+}
+
+float HiHatParameters::getShape() {
+    return _apvts.getRawParameterValue("HIHAT_SHAPE")->load();
 }

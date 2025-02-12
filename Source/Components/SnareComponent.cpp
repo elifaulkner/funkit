@@ -22,7 +22,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _reverbSlider("Verb", apvts, "SNARE_REVERB"),
     _reverbSizeSlider("Verb Size", apvts, "SNARE_REVERB_SIZE"),
     _gateSlider("Gate", apvts, "SNARE_GATE_THRESHOLD"),
-    _trigger("Trigger")
+    _trigger("Trigger (D2)")
 {
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);

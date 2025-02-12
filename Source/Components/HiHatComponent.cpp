@@ -18,12 +18,14 @@ HiHatComponent::HiHatComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _decaySlider("Decay", apvts, "HIHAT_DECAY"),
     _driveSlider("Drive", apvts, "HIHAT_DRIVE"),
     _noiseSlider("Noise", apvts, "HIHAT_NOISE"),
-    _trigger("Trigger")
+    _shapeSlider("Shape", apvts, "HIHAT_SHAPE"),
+    _trigger("Trigger (F#2)")
 {
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);
     addAndMakeVisible(_driveSlider);
     addAndMakeVisible(_noiseSlider);
+    addAndMakeVisible(_shapeSlider);
     addAndMakeVisible(_trigger);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -51,6 +53,7 @@ void HiHatComponent::resized()
     _decaySlider.setBounds(150, 25, 75, 75);
     _driveSlider.setBounds(225, 25, 75, 75);
     _noiseSlider.setBounds(300, 25, 75, 75);
+    _shapeSlider.setBounds(375, 25, 75, 75);
     
     _trigger.setBounds(600, 40, _trigger.getBestWidthForHeight(40), 40);
 }
