@@ -24,6 +24,7 @@ class SnareParameters {
     float getNoiseLevel();
     float getReverb();
     float getReverbSize();
+    float getShape();
     int getNote();
     float getNoiseGateThreshold();
     private:

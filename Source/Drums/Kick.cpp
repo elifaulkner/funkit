@@ -116,6 +116,7 @@ void Kick::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startS
 
 void Kick::setUpParameters() {
     _drum.setDecay(_params.getDecay());
+    _drum.setDecayShape(_params.getShape());
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());
 }
@@ -138,6 +139,11 @@ float KickParameters::getDecay() {
     return _apvts.getRawParameterValue("KICK_DECAY")->load();
 }
 
+float KickParameters::getShape() {
+    return _apvts.getRawParameterValue("KICK_SHAPE")->load();
+}
+
+
 float KickParameters::getLevel() {
     return _apvts.getRawParameterValue("KICK_LEVEL")->load();
 }
@@ -159,6 +165,8 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getPara
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_DECAY", "Decay", juce::NormalisableRange<float> {0.01f, 1.0f, 0.01f}, 0.25f));
 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_SHAPE", "Shape", juce::NormalisableRange<float> {1.0f, 5.0f, 0.1f}, 1.0f));
+    
     params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_LEVEL", "Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.5f));
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_DRIVE", "Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));

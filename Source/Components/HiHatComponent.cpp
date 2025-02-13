@@ -55,7 +55,7 @@ void HiHatComponent::resized()
     _noiseSlider.setBounds(300, 25, 75, 75);
     _shapeSlider.setBounds(375, 25, 75, 75);
     
-    _trigger.setBounds(600, 40, _trigger.getBestWidthForHeight(40), 40);
+    _trigger.setBounds(700, 40, _trigger.getBestWidthForHeight(40), 40);
 }
 
 void HiHatComponent::buttonClicked (juce::Button *button) {

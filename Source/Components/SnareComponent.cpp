@@ -17,6 +17,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _noteSlider("Tune", apvts, "SNARE_NOTE"),
     _levelSlider("Level", apvts, "SNARE_LEVEL"),
     _decaySlider("Decay", apvts, "SNARE_DECAY"),
+    _shapeSlider("Shape", apvts, "SNARE_SHAPE"),
     _driveSlider("Drive", apvts, "SNARE_DRIVE"),
     _noiseSlider("Noise", apvts, "SNARE_NOISE"),
     _reverbSlider("Verb", apvts, "SNARE_REVERB"),
@@ -27,6 +28,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);
+    addAndMakeVisible(_shapeSlider);
     addAndMakeVisible(_driveSlider);
     addAndMakeVisible(_noiseSlider);
     addAndMakeVisible(_reverbSlider);
@@ -56,11 +58,12 @@ void SnareComponent::resized()
     _decaySlider.setBounds(150, 25, 75, 75);
     _driveSlider.setBounds(225, 25, 75, 75);
     _noiseSlider.setBounds(300, 25, 75, 75);
-    _reverbSlider.setBounds(375, 25, 75, 75);
-    _reverbSizeSlider.setBounds(450, 25, 75, 75);
-    _gateSlider.setBounds(525, 25, 75, 75);
+    _shapeSlider.setBounds(375, 25, 75, 75);
+    _reverbSlider.setBounds(450, 25, 75, 75);
+    _reverbSizeSlider.setBounds(525, 25, 75, 75);
+    _gateSlider.setBounds(600, 25, 75, 75);
     
-    _trigger.setBounds(600, 40, _trigger.getBestWidthForHeight(40), 40);
+    _trigger.setBounds(700, 40, _trigger.getBestWidthForHeight(40), 40);
 }
 
 

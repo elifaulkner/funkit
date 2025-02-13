@@ -144,6 +144,7 @@ void Snare::pitchWheelMoved (int newPitchWheelValue)
 void Snare::setUpParameters() {
     _drum.setDecay(_params.getDecay());
     _drum.setNoiseLevel(_params.getNoiseLevel());
+    _drum.setDecayShape(_params.getShape());
     _gate.setThreshold(_params.getNoiseGateThreshold());
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());
@@ -166,6 +167,8 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_DECAY", "Snare Decay", juce::NormalisableRange<float> {0.01f, 0.5f, 0.01f}, 0.25f));
 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_SHAPE", "Snare Shape", juce::NormalisableRange<float> {1.0f, 5.0f, 0.1f}, 1.0f));
+    
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_LEVEL", "Snare Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_DRIVE", "Snare Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 2.0f));
@@ -185,6 +188,10 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
 
 float SnareParameters::getDecay() {
     return _apvts.getRawParameterValue("SNARE_DECAY")->load();
+}
+
+float SnareParameters::getShape() {
+    return _apvts.getRawParameterValue("SNARE_SHAPE")->load();
 }
 
 float SnareParameters::getLevel() {

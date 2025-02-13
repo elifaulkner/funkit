@@ -34,6 +34,7 @@ private:
     LabeledSlider _noteSlider;
     LabeledSlider _levelSlider;
     LabeledSlider _decaySlider;
+    LabeledSlider _shapeSlider;
     LabeledSlider _driveSlider;
     LabeledSlider _noiseSlider;
     LabeledSlider _reverbSlider;

@@ -34,6 +34,7 @@ private:
     LabeledSlider _decaySlider;
     LabeledSlider _driveSlider;
     LabeledSlider _noiseSlider;
+    LabeledSlider _shapeSlider;
     
     juce::TextButton _trigger;
     

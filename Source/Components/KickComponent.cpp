@@ -19,6 +19,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     _decaySlider("Decay", apvts, "KICK_DECAY"),
     _driveSlider("Drive", apvts, "KICK_DRIVE"),
     _noiseSlider("Noise", apvts, "KICK_NOISE"),
+    _shapeSlider("Shape", apvts, "KICK_SHAPE"),
     _trigger("Trigger (C2)")
 {
     addAndMakeVisible(_noteSlider);
@@ -26,6 +27,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     addAndMakeVisible(_decaySlider);
     addAndMakeVisible(_driveSlider);
     addAndMakeVisible(_noiseSlider);
+    addAndMakeVisible(_shapeSlider);
     addAndMakeVisible(_trigger);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -55,8 +57,9 @@ void KickComponent::resized()
     _decaySlider.setBounds(150, 25, 75, 75);
     _driveSlider.setBounds(225, 25, 75, 75);
     _noiseSlider.setBounds(300, 25, 75, 75);
+    _shapeSlider.setBounds(375, 25, 75, 75);
     
-    _trigger.setBounds(600, 40, _trigger.getBestWidthForHeight(40), 40);
+    _trigger.setBounds(700, 40, _trigger.getBestWidthForHeight(40), 40);
 }
 
 void KickComponent::buttonClicked (juce::Button *button) {

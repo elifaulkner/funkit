@@ -20,6 +20,7 @@ class KickParameters {
     float getLevel();
     float getDrive();
     float getNoiseLevel();
+    float getShape();
     int getNote();
     private:
 
