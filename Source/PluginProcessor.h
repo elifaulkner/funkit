@@ -74,6 +74,10 @@ private:
     juce::Synthesiser _hiHatSynth;
     HiHatParameters _hiHatParameters;
 
+    GlobalEffectsParameters _globalParams;
+    GlobalEffects _global;
+
+    
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
     
     //==============================================================================

@@ -22,20 +22,22 @@ FunkitAudioProcessor::FunkitAudioProcessor()
                        ), _apvts(*this, nullptr, "Parameters", createParams())
                         ,_kickParameters(_apvts),
                         _snareParameters(_apvts),
-                        _hiHatParameters(_apvts)
+                        _hiHatParameters(_apvts),
+                        _globalParams(_apvts),
+                        _global(_globalParams)
 #endif
 {
     _kickSynth.addSound(new SynthSound());
-    _kickSynth.addVoice(new Kick(_kickParameters, 0));
-    _kickSynth.addVoice(new Kick(_kickParameters, 0));
+    _kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
+    _kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
 
     _snareSynth.addSound(new SynthSound());
-    _snareSynth.addVoice(new Snare(_snareParameters, 0));
-    _snareSynth.addVoice(new Snare(_snareParameters, 0));
+    _snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
+    _snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
     
     _hiHatSynth.addSound(new SynthSound());
-    _hiHatSynth.addVoice(new HiHat(_hiHatParameters, 0));
-    _hiHatSynth.addVoice(new HiHat(_hiHatParameters, 0));
+    _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters , 0));
+    _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters, 0));
 }
 
 FunkitAudioProcessor::~FunkitAudioProcessor()
@@ -107,9 +109,16 @@ void FunkitAudioProcessor::changeProgramName (int index, const juce::String& new
 //==============================================================================
 void FunkitAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    juce::dsp::ProcessSpec spec;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.sampleRate = sampleRate;
+    spec.numChannels = getTotalNumOutputChannels();
+
+    _global.prepare(spec);
     _kickSynth.setCurrentPlaybackSampleRate(sampleRate);
     _snareSynth.setCurrentPlaybackSampleRate(sampleRate);
-    _hiHatSynth.setCurrentPlaybackSampleRate(sampleRate);
+    _hiHatSynth.setCurrentPlaybackSampleRate(sampleRate);    
+
     
     for(int i = 0; i < _kickSynth.getNumVoices(); i++) {
         if(auto voice = dynamic_cast<Kick*>(_kickSynth.getVoice(i))) {
@@ -246,6 +255,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout FunkitAudioProcessor::create
     }
 
     for(std::unique_ptr<juce::RangedAudioParameter>& p : HiHatParameters::getParameters()) {
+        params.push_back(std::move(p));
+    }
+
+    for(std::unique_ptr<juce::RangedAudioParameter>& p : GlobalEffectsParameters::getParameters()) {
         params.push_back(std::move(p));
     }
     

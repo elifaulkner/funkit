@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../Util/DrumOscillator.h"
+#include "../Util/GlobalEffects.h"
 
 class HiHatParameters {
     public:
@@ -30,7 +31,7 @@ class HiHatParameters {
 
 class HiHat : public juce::SynthesiserVoice {
     public:
-    HiHat(HiHatParameters& parameters, int octave = 0);
+    HiHat(GlobalEffects& global, HiHatParameters& parameters, int octave = 0);
     ~HiHat();
     bool canPlaySound (juce::SynthesiserSound *) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
@@ -48,6 +49,9 @@ class HiHat : public juce::SynthesiserVoice {
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;
+    
+    GlobalEffects& _global;
+    
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;
     juce::dsp::Limiter<float> _limiter;

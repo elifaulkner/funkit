@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "../Util/DrumOscillator.h"
+#include "../Util/GlobalEffects.h"
 
 class SnareParameters {
     public:
@@ -34,7 +35,7 @@ class SnareParameters {
 
 class Snare : public juce::SynthesiserVoice {
     public:
-    Snare(SnareParameters& parameters, int octave);
+    Snare(GlobalEffects& global, SnareParameters& parameters, int octave);
     ~Snare();
     bool canPlaySound (juce::SynthesiserSound *) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
@@ -51,6 +52,8 @@ class Snare : public juce::SynthesiserVoice {
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;
+    
+    GlobalEffects& _global;
     
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;

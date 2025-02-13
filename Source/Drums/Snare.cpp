@@ -10,7 +10,9 @@
 
 #include "Snare.h"
 
-Snare::Snare(SnareParameters& params, int octave) :  _octave(octave), _params(params) {
+Snare::Snare(GlobalEffects& global, SnareParameters& params, int octave) :
+    _global(global), _octave(octave), _params(params)
+{
 
 }
 
@@ -26,6 +28,8 @@ void Snare::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     _drum.prepare(_spec);
     _drum.setDecay(_params.getDecay());
     _drum.setNoiseLevel(_params.getNoiseLevel());
+    
+    _global.prepare(_spec);
     
     _gain.prepare(_spec);
     _gain.setGainLinear(0.4f);
@@ -127,6 +131,8 @@ void Snare::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int start
     
     _reverb.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
+    _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
     _limiter.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});

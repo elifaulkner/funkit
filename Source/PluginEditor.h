@@ -13,6 +13,7 @@
 #include "Components/KickComponent.h"
 #include "Components/SnareComponent.h"
 #include "Components/HiHatComponent.h"
+#include "Components/GlobalEffectsComponent.h"
 //==============================================================================
 /**
 */
@@ -34,6 +35,7 @@ private:
     KickComponent _kick;
     SnareComponent _snare;
     HiHatComponent _hiHat;
+    GlobalEffectsComponent _global;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FunkitAudioProcessorEditor)
 };

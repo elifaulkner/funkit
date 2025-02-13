@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "../Util/DrumOscillator.h"
+#include "../Util/GlobalEffects.h"
 
 class KickParameters {
     public:
@@ -29,7 +30,7 @@ class KickParameters {
 
 class Kick : public juce::SynthesiserVoice {
     public:
-    Kick(KickParameters& parameters, int octave = 0);
+    Kick(GlobalEffects& global, KickParameters& parameters, int octave = 0);
     ~Kick();
     bool canPlaySound (juce::SynthesiserSound *) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
@@ -48,10 +49,15 @@ class Kick : public juce::SynthesiserVoice {
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;
+    
+    GlobalEffects& _global;
+    
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;
     juce::dsp::Limiter<float> _limiter;
     juce::dsp::Compressor<float> _compressor;
+    
+    
     KickParameters& _params;
     int _octave = 0;
     

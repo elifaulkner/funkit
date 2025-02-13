@@ -11,14 +11,15 @@
 
 //==============================================================================
 FunkitAudioProcessorEditor::FunkitAudioProcessorEditor (FunkitAudioProcessor& p)
-: AudioProcessorEditor (&p), audioProcessor (p), _kick(p, p.getApvts()), _snare(p, p.getApvts()), _hiHat(p, p.getApvts())
+: AudioProcessorEditor (&p), audioProcessor (p), _kick(p, p.getApvts()), _snare(p, p.getApvts()), _hiHat(p, p.getApvts()), _global(p, p.getApvts())
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (850, 300);
+    setSize (850, 400);
     addAndMakeVisible(_kick);
     addAndMakeVisible(_snare);
     addAndMakeVisible(_hiHat);
+    addAndMakeVisible(_global);
 }
 
 FunkitAudioProcessorEditor::~FunkitAudioProcessorEditor()
@@ -37,4 +38,5 @@ void FunkitAudioProcessorEditor::resized()
     _kick.setBounds(0, 0, 850, 100);
     _snare.setBounds(0, 100, 850, 100);
     _hiHat.setBounds(0, 200, 850, 100);
+    _global.setBounds(0, 300, 850, 100);
 }

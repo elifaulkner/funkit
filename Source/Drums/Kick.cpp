@@ -10,7 +10,8 @@
 
 #include "Kick.h"
 
-Kick::Kick(KickParameters& parameters, int octave) : _params(parameters), _octave(octave){
+Kick::Kick(GlobalEffects& global, KickParameters& parameters, int octave) :
+    _global(global), _params(parameters), _octave(octave){
 }
 
 Kick::~Kick() {
@@ -102,6 +103,8 @@ void Kick::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startS
     _drum.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
         
     _filter.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    
+    _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 

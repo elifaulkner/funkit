@@ -7,12 +7,21 @@
   <MAINGROUP id="tpqyIe" name="Funkit">
     <GROUP id="{3D010F12-4449-5F8C-3191-8695DDDBE984}" name="Source">
       <GROUP id="{6A380B03-5F60-97D7-3F5E-08AD1BF57FDA}" name="Util">
+        <FILE id="kt1ReB" name="Delay.cpp" compile="1" resource="0" file="Source/Util/Delay.cpp"/>
+        <FILE id="iutbPS" name="Delay.h" compile="0" resource="0" file="Source/Util/Delay.h"/>
         <FILE id="i15A28" name="DrumOscillator.cpp" compile="1" resource="0"
               file="Source/Util/DrumOscillator.cpp"/>
         <FILE id="qX8oXX" name="DrumOscillator.h" compile="0" resource="0"
               file="Source/Util/DrumOscillator.h"/>
+        <FILE id="e5DqyB" name="GlobalEffects.cpp" compile="1" resource="0"
+              file="Source/Util/GlobalEffects.cpp"/>
+        <FILE id="E3DhyB" name="GlobalEffects.h" compile="0" resource="0" file="Source/Util/GlobalEffects.h"/>
       </GROUP>
       <GROUP id="{695EED3B-6858-7B0D-1FAC-C5AEFD552F86}" name="Components">
+        <FILE id="nhJ80Z" name="GlobalEffectsComponent.cpp" compile="1" resource="0"
+              file="Source/Components/GlobalEffectsComponent.cpp"/>
+        <FILE id="WNlA5A" name="GlobalEffectsComponent.h" compile="0" resource="0"
+              file="Source/Components/GlobalEffectsComponent.h"/>
         <FILE id="F4vFZU" name="HiHatComponent.cpp" compile="1" resource="0"
               file="Source/Components/HiHatComponent.cpp"/>
         <FILE id="sCrloj" name="HiHatComponent.h" compile="0" resource="0"

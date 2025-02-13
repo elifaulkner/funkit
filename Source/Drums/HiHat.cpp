@@ -10,7 +10,8 @@
 
 #include "HiHat.h"
 
-HiHat::HiHat(HiHatParameters& parameters, int octave) :
+HiHat::HiHat(GlobalEffects& global, HiHatParameters& parameters, int octave) :
+    _global(global),
     _params(parameters),
     _octave(octave) {
     
@@ -73,6 +74,8 @@ void HiHat::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int start
     _drum.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
         
     _filter.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    
+    _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
