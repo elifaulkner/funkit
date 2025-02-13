@@ -15,7 +15,25 @@
 class DrumOscillator {
     public:
     void prepare(juce::dsp::ProcessSpec& spec);
-    void process (const juce::dsp::ProcessContextReplacing<float>& context) noexcept;
+    template <typename ProcessContext> void process (const ProcessContext& context) noexcept
+    {
+        float baseIncrement = juce::MathConstants<float>::twoPi / _spec.sampleRate;
+        juce::dsp::AudioBlock<float> outputBuffer = context.getOutputBlock();
+        
+        for(int s = 0; s < outputBuffer.getNumSamples(); ++s) {
+            float envelopeValue = std::max(0.0f, (_envelopeSamples-_envelopeCounter)/(_envelopeSamples));
+            envelopeValue = std::pow(envelopeValue, _decayShape);
+            _envelopeCounter++;
+            float value = 0.0f;
+            if(_useWave) {
+                value = std::sin(_phase.advance(baseIncrement*_frequency*envelopeValue)-juce::MathConstants<float>::pi)*envelopeValue;
+            }
+
+            for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
+                outputBuffer.setSample(c, s, value+(_random.nextFloat()*_noiseLevel-_noiseLevel/2)*envelopeValue);
+            }
+        }
+    }
     void noteOn();
     void noteOff();
     void setFrequency(float frequency);
