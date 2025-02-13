@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="wGEfpe" name="Funkit" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="FunkFreak Audio"
-              companyWebsite="funkfreakaudio.com" pluginFormats="buildVST3"
+              companyWebsite="funkfreakaudio.com" pluginFormats="buildAUv3,buildVST3"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="tpqyIe" name="Funkit">
     <GROUP id="{3D010F12-4449-5F8C-3191-8695DDDBE984}" name="Source">
