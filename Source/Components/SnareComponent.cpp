@@ -52,16 +52,23 @@ void SnareComponent::paint (juce::Graphics& g)
 
 void SnareComponent::resized()
 {
-    _label.setBounds(getBounds().getCentreX()-50, 0, 100, 25);
-    _noteSlider.setBounds(0, 25, 75, 75);
-    _levelSlider.setBounds(75, 25, 75, 75);
-    _decaySlider.setBounds(150, 25, 75, 75);
-    _driveSlider.setBounds(225, 25, 75, 75);
-    _noiseSlider.setBounds(300, 25, 75, 75);
-    _shapeSlider.setBounds(375, 25, 75, 75);
-    _reverbSlider.setBounds(450, 25, 75, 75);
-    _reverbSizeSlider.setBounds(525, 25, 75, 75);
-    _gateSlider.setBounds(600, 25, 75, 75);
+    auto area = getLocalBounds();
+    
+    int labelHeight = 25;
+    
+    _label.setBounds(area.removeFromTop(labelHeight));
+    
+    int sliderWidth = 75;
+    
+    _noteSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
+    _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _reverbSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _reverbSizeSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _gateSlider.setBounds(area.removeFromLeft(sliderWidth));
     
     _trigger.setBounds(700, 40, _trigger.getBestWidthForHeight(40), 40);
 }

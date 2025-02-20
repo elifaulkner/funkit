@@ -15,11 +15,13 @@
 GlobalEffectsComponent::GlobalEffectsComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValueTreeState& apvts) : _processor(ap),
     _delaySlider("Delay", apvts, "GLOBAL_DELAY"),
     _delayLevelSlider("Delay Level", apvts, "GLOBAL_DELAY_LEVEL"),
+    _delayFeedbackSlider("Delay Feedback", apvts, "GLOBAL_DELAY_FEEDBACK"),
     _cutoffSlider("Cutoff", apvts, "GLOBAL_CUTOFF"),
     _resonanceSlider("Resonance", apvts, "GLOBAL_RES")
 {
     addAndMakeVisible(_delaySlider);
     addAndMakeVisible(_delayLevelSlider);
+    addAndMakeVisible(_delayFeedbackSlider);
     addAndMakeVisible(_cutoffSlider);
     addAndMakeVisible(_resonanceSlider);
     
@@ -41,10 +43,17 @@ void GlobalEffectsComponent::paint (juce::Graphics& g)
 
 void GlobalEffectsComponent::resized()
 {
-    _label.setBounds(getBounds().getCentreX()-50, 0, 100, 25);
+    auto area = getLocalBounds();
     
-    _delaySlider.setBounds(0, 25, 75, 75);
-    _delayLevelSlider.setBounds(75, 25, 75, 75);
-    _cutoffSlider.setBounds(150, 25, 75, 75);
-    _resonanceSlider.setBounds(225, 25, 75, 75);
+    int labelHeight = 25;
+    
+    _label.setBounds(area.removeFromTop(labelHeight));
+    
+    int sliderWidth = 75;
+    
+    _delaySlider.setBounds(area.removeFromLeft(sliderWidth));
+    _delayLevelSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _delayFeedbackSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _cutoffSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _resonanceSlider.setBounds(area.removeFromLeft(sliderWidth));
 }

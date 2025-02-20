@@ -18,16 +18,20 @@ class Delay {
     ~Delay();
     void setDelay(float delay);
     void setDelayLevel(float level);
+    void setFeedback(int feedback);
     void prepare(juce::dsp::ProcessSpec& spec);
     template <typename ProcessContext> void process (const ProcessContext& context) noexcept
     {
-        _mixer.reset();
-        _mixer.pushDrySamples(context.getInputBlock());
-        _delay.process(context);
-        _mixer.mixWetSamples(context.getOutputBlock());
+        for(int k = 0; k < _feedback; k++) {
+            _mixer[k].reset();
+            _mixer[k].pushDrySamples(context.getInputBlock());
+            _delay[k].process(context);
+            _mixer[k].mixWetSamples(context.getOutputBlock());
+        }
     }
     private:
-    juce::dsp::DelayLine<float> _delay;
-    juce::dsp::DryWetMixer<float> _mixer;
+    std::array<juce::dsp::DelayLine<float>, 10> _delay;
+    std::array<juce::dsp::DryWetMixer<float>, 10> _mixer;
     float _sampleRate = 0;
+    int _feedback = 1;
 };

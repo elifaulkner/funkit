@@ -19,6 +19,7 @@ class GlobalEffectsParameters {
     ~GlobalEffectsParameters();
     float getDelay();
     float getDelayLevel();
+    float getDelayFeedback();
     float getCutoff();
     float getResonance();
     
@@ -43,6 +44,7 @@ class GlobalEffects {
     private:
     bool _isPrepared = false;
     GlobalEffectsParameters& _params;
+    int _sampleRate = 0;
     
     Delay _delay;
     juce::dsp::LadderFilter<float> _filter;

@@ -181,11 +181,11 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_NOISE", "Snare Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.3f));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_REVERB", "Snare Reverb", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.6f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_REVERB", "Snare Reverb", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_REVERB_SIZE", "Snare Reverb Size", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_GATE_THRESHOLD", "Snare Gate Threshold", juce::NormalisableRange<float> {-50.0f, -1.0f, 0.1f}, -20.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SNARE_GATE_THRESHOLD", "Snare Gate Threshold", juce::NormalisableRange<float> {-50.0f, -1.0f, 0.1f}, -40.0f));
     
     params.push_back(std::make_unique<juce::AudioParameterInt>("SNARE_NOTE", "Snare Note", 36, 48, 45));
     
