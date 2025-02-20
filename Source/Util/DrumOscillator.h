@@ -32,6 +32,10 @@ class DrumOscillator {
             for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
                 outputBuffer.setSample(c, s, value+(_random.nextFloat()*_noiseLevel-_noiseLevel/2)*envelopeValue);
             }
+
+            for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
+                outputBuffer.setSample(c, s, outputBuffer.getSample(c, s)*_velocity);
+            }
         }
     }
     void noteOn();
@@ -41,6 +45,7 @@ class DrumOscillator {
     void setNoiseLevel(float noiseLevel);
     void setUseWave(bool value);
     void setDecayShape(float shape);
+    void setVelocity(float velocity);
     void reset();
     
     private:
@@ -55,4 +60,5 @@ class DrumOscillator {
     bool _useWave = true;
     float _noiseLevel = 0.0;
     juce::Random _random;
+    float _velocity = 1.0f;
 };

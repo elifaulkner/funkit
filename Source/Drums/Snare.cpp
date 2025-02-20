@@ -86,6 +86,7 @@ void Snare::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSoun
         }
         
         _drum.setFrequency(frequency);
+        _drum.setVelocity(velocity);
         _drum.noteOn();
     }
 }

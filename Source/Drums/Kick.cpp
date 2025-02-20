@@ -67,6 +67,7 @@ void Kick::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound
             frequency /= _octave*-2.0;
         }
         _drum.setFrequency(frequency);
+        _drum.setVelocity(velocity);
         _drum.noteOn();
     }
 }

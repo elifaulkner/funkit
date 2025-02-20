@@ -49,3 +49,7 @@ void DrumOscillator::setUseWave(bool value) {
 void DrumOscillator::setDecayShape(float shape) {
     _decayShape = shape;
 }
+
+void DrumOscillator::setVelocity(float velocity) {
+    _velocity = velocity;
+}

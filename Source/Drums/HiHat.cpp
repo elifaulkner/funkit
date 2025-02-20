@@ -98,6 +98,7 @@ void HiHat::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSoun
             frequency /= _octave*-2.0;
         }
         _drum.setFrequency(frequency);
+        _drum.setVelocity(velocity);
         _drum.noteOn();
     }
 }
