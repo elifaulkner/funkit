@@ -33,8 +33,9 @@ class DrumOscillator {
                 outputBuffer.setSample(c, s, value+(_random.nextFloat()*_noiseLevel-_noiseLevel/2)*envelopeValue);
             }
 
+            float adjVelocity = std::pow(_velocity, 1.25);
             for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
-                outputBuffer.setSample(c, s, outputBuffer.getSample(c, s)*_velocity);
+                outputBuffer.setSample(c, s, outputBuffer.getSample(c, s)*adjVelocity);
             }
         }
     }
