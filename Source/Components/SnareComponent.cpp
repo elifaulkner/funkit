@@ -35,6 +35,9 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     addAndMakeVisible(_reverbSizeSlider);
     addAndMakeVisible(_gateSlider);
     
+    _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
+    _label.setJustificationType(juce::Justification::centred);
+    _label.setFont(22);
     addAndMakeVisible(_label);
     
     addAndMakeVisible(_trigger);

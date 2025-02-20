@@ -30,7 +30,7 @@ HiHatComponent::HiHatComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
-    _label.setFont(15);
+    _label.setFont(22);
     
     _trigger.addListener(this);
     

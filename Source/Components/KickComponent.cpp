@@ -32,7 +32,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
-    _label.setFont(15);
+    _label.setFont(22);
     
     _trigger.addListener(this);
     
