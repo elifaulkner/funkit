@@ -23,7 +23,8 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _reverbSlider("Verb", apvts, "SNARE_REVERB"),
     _reverbSizeSlider("Verb Size", apvts, "SNARE_REVERB_SIZE"),
     _gateSlider("Gate", apvts, "SNARE_GATE_THRESHOLD"),
-    _trigger("Trigger (D2)")
+    _trigger("Trigger (D2)"),
+    _globalToggle("Use Global", apvts, "SNARE_USE_GLOBAL")
 {
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
@@ -34,6 +35,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     addAndMakeVisible(_reverbSlider);
     addAndMakeVisible(_reverbSizeSlider);
     addAndMakeVisible(_gateSlider);
+    addAndMakeVisible(_globalToggle);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
@@ -73,7 +75,9 @@ void SnareComponent::resized()
     _reverbSizeSlider.setBounds(area.removeFromLeft(sliderWidth));
     _gateSlider.setBounds(area.removeFromLeft(sliderWidth));
     
-    _trigger.setBounds(700, 40, _trigger.getBestWidthForHeight(40), 40);
+    _globalToggle.setBounds(750, 20, 75, 75);
+    
+    _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
 }
 
 

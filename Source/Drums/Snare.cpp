@@ -131,8 +131,10 @@ void Snare::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int start
     _gate.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     
     _reverb.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
-
-    _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    
+    if(_params.useGlobal()) {
+        _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    }
     
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
@@ -190,6 +192,8 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
     
     params.push_back(std::make_unique<juce::AudioParameterInt>("SNARE_NOTE", "Snare Note", 36, 48, 45));
     
+    params.push_back(std::make_unique<juce::AudioParameterBool>("SNARE_USE_GLOBAL", "Snare Use Global", true));
+    
     return params;
 }
 
@@ -227,4 +231,8 @@ int SnareParameters::getNote() {
 
 float SnareParameters::getNoiseGateThreshold() {
     return _apvts.getRawParameterValue("SNARE_GATE_THRESHOLD")->load();
+}
+
+bool SnareParameters::useGlobal() {
+    return _apvts.getRawParameterValue("SNARE_USE_GLOBAL")->load();
 }

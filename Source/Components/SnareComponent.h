@@ -13,7 +13,7 @@
 #include <JuceHeader.h>
 #include "LabeledSlider.h"
 #include "../PluginProcessor.h"
-
+#include "Util/LabeledToggle.h"
 //==============================================================================
 /*
 */
@@ -40,6 +40,8 @@ private:
     LabeledSlider _reverbSlider;
     LabeledSlider _reverbSizeSlider;
     LabeledSlider _gateSlider;
+    
+    LabeledToggle _globalToggle;
     
     juce::TextButton _trigger;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SnareComponent)

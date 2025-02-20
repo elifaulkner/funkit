@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "LabeledSlider.h"
+#include "Util/LabeledToggle.h"
 #include "../PluginProcessor.h"
 //==============================================================================
 /*
@@ -35,6 +36,8 @@ private:
     LabeledSlider _driveSlider;
     LabeledSlider _noiseSlider;
     LabeledSlider _shapeSlider;
+    
+    LabeledToggle _globalToggle;
     
     juce::TextButton _trigger;
     

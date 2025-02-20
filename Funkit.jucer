@@ -18,6 +18,14 @@
         <FILE id="E3DhyB" name="GlobalEffects.h" compile="0" resource="0" file="Source/Util/GlobalEffects.h"/>
       </GROUP>
       <GROUP id="{695EED3B-6858-7B0D-1FAC-C5AEFD552F86}" name="Components">
+        <GROUP id="{4F591441-91AA-37DA-D159-B3C66D9791B4}" name="Util">
+          <FILE id="IQ4e2h" name="LabeledSlider.cpp" compile="1" resource="0"
+                file="Source/Components/LabeledSlider.cpp"/>
+          <FILE id="NFXSQZ" name="LabeledSlider.h" compile="0" resource="0" file="Source/Components/LabeledSlider.h"/>
+          <FILE id="vlOgjj" name="LabeledToggle.cpp" compile="1" resource="0"
+                file="Source/Components/Util/LabeledToggle.cpp"/>
+          <FILE id="GJn7sF" name="LabeledToggle.h" compile="0" resource="0" file="Source/Components/Util/LabeledToggle.h"/>
+        </GROUP>
         <FILE id="nhJ80Z" name="GlobalEffectsComponent.cpp" compile="1" resource="0"
               file="Source/Components/GlobalEffectsComponent.cpp"/>
         <FILE id="WNlA5A" name="GlobalEffectsComponent.h" compile="0" resource="0"
@@ -29,9 +37,6 @@
         <FILE id="xBCNnN" name="KickComponent.cpp" compile="1" resource="0"
               file="Source/Components/KickComponent.cpp"/>
         <FILE id="zYmscZ" name="KickComponent.h" compile="0" resource="0" file="Source/Components/KickComponent.h"/>
-        <FILE id="IQ4e2h" name="LabeledSlider.cpp" compile="1" resource="0"
-              file="Source/Components/LabeledSlider.cpp"/>
-        <FILE id="NFXSQZ" name="LabeledSlider.h" compile="0" resource="0" file="Source/Components/LabeledSlider.h"/>
         <FILE id="vghgn3" name="SnareComponent.cpp" compile="1" resource="0"
               file="Source/Components/SnareComponent.cpp"/>
         <FILE id="br9MMm" name="SnareComponent.h" compile="0" resource="0"

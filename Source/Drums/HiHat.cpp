@@ -75,7 +75,9 @@ void HiHat::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int start
         
     _filter.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     
-    _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    if(_params.useGlobal()) {
+        _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    }
     
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
@@ -135,6 +137,8 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> HiHatParameters::getPar
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_NOISE", "Noise", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.8f));
 
+    params.push_back(std::make_unique<juce::AudioParameterBool>("HIHAT_USE_GLOBAL", "HiHat Use Global", true));
+    
     return params;
 }
 
@@ -171,4 +175,8 @@ float HiHatParameters::getNoiseLevel() {
 
 float HiHatParameters::getShape() {
     return _apvts.getRawParameterValue("HIHAT_SHAPE")->load();
+}
+
+bool HiHatParameters::useGlobal() {
+    return _apvts.getRawParameterValue("HIHAT_USE_GLOBAL")->load();
 }

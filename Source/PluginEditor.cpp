@@ -15,7 +15,7 @@ FunkitAudioProcessorEditor::FunkitAudioProcessorEditor (FunkitAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (850, 400);
+    setSize (1000, 400);
     addAndMakeVisible(_kick);
     addAndMakeVisible(_snare);
     addAndMakeVisible(_hiHat);
@@ -35,8 +35,8 @@ void FunkitAudioProcessorEditor::paint (juce::Graphics& g)
 
 void FunkitAudioProcessorEditor::resized()
 {
-    _kick.setBounds(0, 0, 850, 100);
-    _snare.setBounds(0, 100, 850, 100);
-    _hiHat.setBounds(0, 200, 850, 100);
-    _global.setBounds(0, 300, 850, 100);
+    _kick.setBounds(0, 0, 1000, 100);
+    _snare.setBounds(0, 100, 1000, 100);
+    _hiHat.setBounds(0, 200, 1000, 100);
+    _global.setBounds(0, 300, 1000, 100);
 }

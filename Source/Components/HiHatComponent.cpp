@@ -19,7 +19,8 @@ HiHatComponent::HiHatComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _driveSlider("Drive", apvts, "HIHAT_DRIVE"),
     _noiseSlider("Noise", apvts, "HIHAT_NOISE"),
     _shapeSlider("Shape", apvts, "HIHAT_SHAPE"),
-    _trigger("Trigger (F#2)")
+    _trigger("Trigger (F#2)"),
+    _globalToggle("Use Global", apvts, "HIHAT_USE_GLOBAL")
 {
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);
@@ -27,6 +28,8 @@ HiHatComponent::HiHatComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     addAndMakeVisible(_noiseSlider);
     addAndMakeVisible(_shapeSlider);
     addAndMakeVisible(_trigger);
+    
+    addAndMakeVisible(_globalToggle);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
@@ -62,7 +65,9 @@ void HiHatComponent::resized()
     _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
     
-    _trigger.setBounds(700, 40, _trigger.getBestWidthForHeight(40), 40);
+    _globalToggle.setBounds(750, 20, 75, 75);
+    
+    _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
 }
 
 void HiHatComponent::buttonClicked (juce::Button *button) {

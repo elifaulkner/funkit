@@ -23,6 +23,7 @@ class KickParameters {
     float getNoiseLevel();
     float getShape();
     int getNote();
+    bool useGlobal();
     private:
 
     juce::AudioProcessorValueTreeState& _apvts;

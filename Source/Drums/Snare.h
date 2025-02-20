@@ -28,6 +28,8 @@ class SnareParameters {
     float getShape();
     int getNote();
     float getNoiseGateThreshold();
+    bool useGlobal();
+    
     private:
 
     juce::AudioProcessorValueTreeState& _apvts;

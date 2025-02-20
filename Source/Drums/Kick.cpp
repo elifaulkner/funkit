@@ -105,7 +105,9 @@ void Kick::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startS
         
     _filter.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     
-    _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    if(_params.useGlobal()) {
+        _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
+    }
     
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
@@ -164,6 +166,10 @@ int KickParameters::getNote() {
     return _apvts.getRawParameterValue("KICK_NOTE")->load();
 }
 
+bool KickParameters::useGlobal() {
+    return _apvts.getRawParameterValue("KICK_USE_GLOBAL")->load();
+}
+
 std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     
@@ -178,6 +184,8 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getPara
     params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_NOISE", "Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.125f));
 
     params.push_back(std::make_unique<juce::AudioParameterInt>("KICK_NOTE", "Kick Note", 24, 36, 33));
+    
+    params.push_back(std::make_unique<juce::AudioParameterBool>("KICK_USE_GLOBAL", "Kick Use Global", true));
     
     return params;
 }
