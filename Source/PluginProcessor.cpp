@@ -99,7 +99,7 @@ void FunkitAudioProcessor::setCurrentProgram (int index)
 
 const juce::String FunkitAudioProcessor::getProgramName (int index)
 {
-    return {};
+    return "Default";
 }
 
 void FunkitAudioProcessor::changeProgramName (int index, const juce::String& newName)
@@ -228,15 +228,17 @@ juce::AudioProcessorEditor* FunkitAudioProcessor::createEditor()
 //==============================================================================
 void FunkitAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    auto state = _apvts.copyState();
+    std::unique_ptr<juce::XmlElement> xml (state.createXml());
+    copyXmlToBinary (*xml, destData);
 }
 
 void FunkitAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName (_apvts.state.getType()))
+            _apvts.replaceState (juce::ValueTree::fromXml (*xmlState));
 }
 
 //==============================================================================
