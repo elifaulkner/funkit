@@ -165,17 +165,17 @@ int KickParameters::getNote() {
 std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_DECAY", "Decay", juce::NormalisableRange<float> {0.01f, 1.0f, 0.01f}, 0.25f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_DECAY", 1), "Decay", juce::NormalisableRange<float> {0.01f, 1.0f, 0.01f}, 0.25f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_SHAPE", "Shape", juce::NormalisableRange<float> {1.0f, 5.0f, 0.1f}, 1.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_SHAPE", 1), "Shape", juce::NormalisableRange<float> {1.0f, 5.0f, 0.1f}, 1.0f));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_LEVEL", "Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_LEVEL", 1), "Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.5f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_DRIVE", "Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_DRIVE", 1), "Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("KICK_NOISE", "Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.125f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_NOISE", 1), "Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.125f));
 
-    params.push_back(std::make_unique<juce::AudioParameterInt>("KICK_NOTE", "Kick Note", 24, 36, 33));
+    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("KICK_NOTE", 1), "Kick Note", 24, 36, 33));
     
     return params;
 }
