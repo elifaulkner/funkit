@@ -12,6 +12,7 @@
 
 #include "../Util/DrumOscillator.h"
 #include "../Util/GlobalEffects.h"
+#include "../Util/Delay.h"
 
 class HiHatParameters {
     public:
@@ -23,8 +24,11 @@ class HiHatParameters {
     float getDrive();
     float getNoiseLevel();
     float getShape();
+    float getDelay();
+    float getDelayLevel();
+    int getDelayFeedback();
+    
     int getNote();
-    bool useGlobal();
     private:
 
     juce::AudioProcessorValueTreeState& _apvts;
@@ -51,14 +55,16 @@ class HiHat : public juce::SynthesiserVoice {
     
     juce::AudioBuffer<float> _synthBuffer;
     
-    GlobalEffects& _global;
-    
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;
     juce::dsp::Limiter<float> _limiter;
     juce::dsp::Compressor<float> _compressor;
+    Delay _delay;
+    
     HiHatParameters& _params;
     int _octave = 0;
+    
+    float _sampleRate = 0;
     
     void setUpParameters();
 };

@@ -11,7 +11,7 @@
 #include "Snare.h"
 
 Snare::Snare(GlobalEffects& global, SnareParameters& params, int octave) :
-    _global(global), _octave(octave), _params(params)
+    _octave(octave), _params(params)
 {
 
 }
@@ -28,8 +28,6 @@ void Snare::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     _drum.prepare(_spec);
     _drum.setDecay(_params.getDecay());
     _drum.setNoiseLevel(_params.getNoiseLevel());
-    
-    _global.prepare(_spec);
     
     _gain.prepare(_spec);
     _gain.setGainLinear(0.4f);
@@ -132,10 +130,6 @@ void Snare::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int start
     
     _reverb.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
     
-    if(_params.useGlobal()) {
-        _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
-    }
-    
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 
     _limiter.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
@@ -192,8 +186,6 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
     
     params.push_back(std::make_unique<juce::AudioParameterInt>("SNARE_NOTE", "Snare Note", 36, 48, 45));
     
-    params.push_back(std::make_unique<juce::AudioParameterBool>("SNARE_USE_GLOBAL", "Snare Use Global", true));
-    
     return params;
 }
 
@@ -231,8 +223,4 @@ int SnareParameters::getNote() {
 
 float SnareParameters::getNoiseGateThreshold() {
     return _apvts.getRawParameterValue("SNARE_GATE_THRESHOLD")->load();
-}
-
-bool SnareParameters::useGlobal() {
-    return _apvts.getRawParameterValue("SNARE_USE_GLOBAL")->load();
 }

@@ -23,7 +23,6 @@ class KickParameters {
     float getNoiseLevel();
     float getShape();
     int getNote();
-    bool useGlobal();
     private:
 
     juce::AudioProcessorValueTreeState& _apvts;
@@ -50,8 +49,6 @@ class Kick : public juce::SynthesiserVoice {
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;
-    
-    GlobalEffects& _global;
     
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;

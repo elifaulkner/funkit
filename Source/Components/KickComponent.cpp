@@ -20,8 +20,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     _driveSlider("Drive", apvts, "KICK_DRIVE"),
     _noiseSlider("Noise", apvts, "KICK_NOISE"),
     _shapeSlider("Shape", apvts, "KICK_SHAPE"),
-    _trigger("Trigger (C2)"),
-    _globalToggle("Use Global", apvts, "KICK_USE_GLOBAL")
+    _trigger("Trigger (C2)")
 {
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
@@ -30,8 +29,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     addAndMakeVisible(_noiseSlider);
     addAndMakeVisible(_shapeSlider);
     addAndMakeVisible(_trigger);
-    addAndMakeVisible(_globalToggle);
-
+    
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
     _label.setFont(22);
@@ -67,8 +65,6 @@ void KickComponent::resized()
     _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
     _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
-    
-    _globalToggle.setBounds(750, 20, 75, 75);
     
     _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
 }

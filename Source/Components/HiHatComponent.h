@@ -37,9 +37,10 @@ private:
     LabeledSlider _driveSlider;
     LabeledSlider _noiseSlider;
     LabeledSlider _shapeSlider;
+    LabeledSlider _delaySlider;
+    LabeledSlider _delayLevelSlider;
+    LabeledSlider _delayFeedbackSlider;
 
-    LabeledToggle _globalToggle;
-    
     juce::TextButton _trigger;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HiHatComponent)
 };

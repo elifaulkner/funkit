@@ -28,7 +28,6 @@ class SnareParameters {
     float getShape();
     int getNote();
     float getNoiseGateThreshold();
-    bool useGlobal();
     
     private:
 
@@ -54,8 +53,6 @@ class Snare : public juce::SynthesiserVoice {
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;
-    
-    GlobalEffects& _global;
     
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;

@@ -207,6 +207,11 @@ void FunkitAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
     _kickSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     _snareSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     _hiHatSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    
+    juce::dsp::AudioBlock<float> audioBlock { buffer };
+    //audioBlock.clear();
+    
+    _global.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
 }
 
 //==============================================================================

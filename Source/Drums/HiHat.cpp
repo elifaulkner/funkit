@@ -11,7 +11,6 @@
 #include "HiHat.h"
 
 HiHat::HiHat(GlobalEffects& global, HiHatParameters& parameters, int octave) :
-    _global(global),
     _params(parameters),
     _octave(octave) {
     
@@ -53,6 +52,9 @@ void HiHat::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     _limiter.setThreshold(-2.0);
     _limiter.setRelease(25);
     
+    _delay.prepare(spec);
+    _sampleRate = spec.sampleRate;
+    
     _isPrepared = true;
 }
 
@@ -74,14 +76,10 @@ void HiHat::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int start
     _drum.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
         
     _filter.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
-    
-    if(_params.useGlobal()) {
-        _global.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
-    }
+
+    _delay.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
     
     _gain.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
-
-    //_compressor.process(juce::dsp::ProcessContextReplacing<float>(audioBlock));
     
     _limiter.process(juce::dsp::ProcessContextReplacing<float> {audioBlock});
     
@@ -136,8 +134,12 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> HiHatParameters::getPar
     params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_DRIVE", "Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_NOISE", "Noise", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.8f));
+    
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_DELAY", "Delay", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterBool>("HIHAT_USE_GLOBAL", "HiHat Use Global", true));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("HIHAT_DELAY_LEVEL", "Delay Level", juce::NormalisableRange<float> {0.0f, 1.0f, 0.01f}, 0.0f));
+
+    params.push_back(std::make_unique<juce::AudioParameterInt>("HIHAT_DELAY_FEEDBACK", "Delay Feedback", 1, 10, 1));
     
     return params;
 }
@@ -148,6 +150,9 @@ void HiHat::setUpParameters() {
     _drum.setDecayShape(_params.getShape());
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());
+    _delay.setDelay(_params.getDelay()*_sampleRate);
+    _delay.setDelayLevel(_params.getDelayLevel());
+    _delay.setFeedback(_params.getDelayFeedback());
 }
 
 HiHatParameters::HiHatParameters(juce::AudioProcessorValueTreeState& apvts) : _apvts(apvts) {
@@ -177,6 +182,14 @@ float HiHatParameters::getShape() {
     return _apvts.getRawParameterValue("HIHAT_SHAPE")->load();
 }
 
-bool HiHatParameters::useGlobal() {
-    return _apvts.getRawParameterValue("HIHAT_USE_GLOBAL")->load();
+float HiHatParameters::getDelay() {
+    return _apvts.getRawParameterValue("HIHAT_DELAY")->load();
+}
+
+float HiHatParameters::getDelayLevel() {
+    return _apvts.getRawParameterValue("HIHAT_DELAY_LEVEL")->load();
+}
+
+int HiHatParameters::getDelayFeedback() {
+    return _apvts.getRawParameterValue("HIHAT_DELAY_FEEDBACK")->load();
 }
