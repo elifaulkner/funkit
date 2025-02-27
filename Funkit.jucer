@@ -16,6 +16,8 @@
         <FILE id="e5DqyB" name="GlobalEffects.cpp" compile="1" resource="0"
               file="Source/Util/GlobalEffects.cpp"/>
         <FILE id="E3DhyB" name="GlobalEffects.h" compile="0" resource="0" file="Source/Util/GlobalEffects.h"/>
+        <FILE id="ke2NsY" name="Saturator.cpp" compile="1" resource="0" file="Source/Util/Saturator.cpp"/>
+        <FILE id="yWgixu" name="Saturator.h" compile="0" resource="0" file="Source/Util/Saturator.h"/>
       </GROUP>
       <GROUP id="{695EED3B-6858-7B0D-1FAC-C5AEFD552F86}" name="Components">
         <GROUP id="{4F591441-91AA-37DA-D159-B3C66D9791B4}" name="Util">

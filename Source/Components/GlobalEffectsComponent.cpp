@@ -17,13 +17,15 @@ GlobalEffectsComponent::GlobalEffectsComponent(FunkitAudioProcessor& ap, juce::A
     _delayLevelSlider("Delay Level", apvts, "GLOBAL_DELAY_LEVEL"),
     _delayFeedbackSlider("Delay Feedback", apvts, "GLOBAL_DELAY_FEEDBACK"),
     _cutoffSlider("Cutoff", apvts, "GLOBAL_CUTOFF"),
-    _resonanceSlider("Resonance", apvts, "GLOBAL_RES")
+    _resonanceSlider("Resonance", apvts, "GLOBAL_RES"),
+_saturationSlider("Saturation", apvts, "GLOBAL_SATURATION_LEVEL")
 {
     addAndMakeVisible(_delaySlider);
     addAndMakeVisible(_delayLevelSlider);
     addAndMakeVisible(_delayFeedbackSlider);
     addAndMakeVisible(_cutoffSlider);
     addAndMakeVisible(_resonanceSlider);
+    addAndMakeVisible(_saturationSlider);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
@@ -56,4 +58,5 @@ void GlobalEffectsComponent::resized()
     _delayFeedbackSlider.setBounds(area.removeFromLeft(sliderWidth));
     _cutoffSlider.setBounds(area.removeFromLeft(sliderWidth));
     _resonanceSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _saturationSlider.setBounds(area.removeFromLeft(sliderWidth));
 }

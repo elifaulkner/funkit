@@ -26,6 +26,8 @@ void GlobalEffects::prepare(juce::dsp::ProcessSpec& spec) {
         _filter.setDrive(1.0f);
         _filter.setResonance(0.0f);
         _filter.setCutoffFrequencyHz(20000.0f);
+
+        _saturator.prepare(spec);
         
         _sampleRate = spec.sampleRate;
         _isPrepared = true;
@@ -38,6 +40,7 @@ void GlobalEffects::setUpParameters() {
     _delay.setFeedback(_params.getDelayFeedback());
     _filter.setCutoffFrequencyHz(_params.getCutoff());
     _filter.setResonance(_params.getResonance());
+    _saturator.setSaturationLevel(_params.getSaturationLevel());
 }
 
 GlobalEffectsParameters::GlobalEffectsParameters(juce::AudioProcessorValueTreeState& apvts) : _apvts(apvts){
@@ -46,6 +49,10 @@ GlobalEffectsParameters::GlobalEffectsParameters(juce::AudioProcessorValueTreeSt
 
 GlobalEffectsParameters::~GlobalEffectsParameters() {
     
+}
+
+float GlobalEffectsParameters::getSaturationLevel() {
+    return _apvts.getRawParameterValue("GLOBAL_SATURATION_LEVEL")->load();
 }
 
 float GlobalEffectsParameters::getDelay() {
@@ -71,16 +78,18 @@ float GlobalEffectsParameters::getDelayFeedback() {
 std::vector<std::unique_ptr<juce::RangedAudioParameter>> GlobalEffectsParameters::getParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_DELAY", 1), "Delay", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_DELAY", 1), "Delay", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f, 0.4f}, 0.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_DELAY_LEVEL", 1), "Delay Level", juce::NormalisableRange<float> {0.0f, 1.0f, 0.01f}, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_DELAY_LEVEL", 1), "Delay Level", juce::NormalisableRange<float> {0.0f, 1.0f, 0.01f, 0.3f}, 0.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("GLOBAL_DELAY_FEEDBACK", 1), "Delay Feedback", 1, 10, 1));
+    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("GLOBAL_DELAY_FEEDBACK", 1), "Delay Feedback", 0, 10, 1));
 
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_CUTOFF", 1), "Cutoff", juce::NormalisableRange<float> {1.00f, 20000.0f, 1.0f}, 20000.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_CUTOFF", 1), "Cutoff", juce::NormalisableRange<float> {1.00f, 20000.0f, 1.0f, 0.3f}, 20000.0f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_RES", 1), "Resonance", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.0f));
-    
+
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("GLOBAL_SATURATION_LEVEL", 1), "Delay Level", juce::NormalisableRange<float> {0.0f, 1.0f, 0.01f, 0.4f}, 0.0f));
+
     return params;
 }

@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "Delay.h"
+#include "Saturator.h"
 
 class GlobalEffectsParameters {
     public:
@@ -22,6 +23,7 @@ class GlobalEffectsParameters {
     float getDelayFeedback();
     float getCutoff();
     float getResonance();
+    float getSaturationLevel();
     
     static std::vector<std::unique_ptr<juce::RangedAudioParameter>> getParameters();
     private:
@@ -40,6 +42,7 @@ class GlobalEffects {
         
         _delay.process(context);
         _filter.process(context);
+        _saturator.process(context);
     }
     private:
     bool _isPrepared = false;
@@ -48,6 +51,7 @@ class GlobalEffects {
     
     Delay _delay;
     juce::dsp::LadderFilter<float> _filter;
+    Saturator _saturator;
     
     void setUpParameters();
 };

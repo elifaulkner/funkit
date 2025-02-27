@@ -35,5 +35,6 @@ private:
     LabeledSlider _delayFeedbackSlider;
     LabeledSlider _cutoffSlider;
     LabeledSlider _resonanceSlider;
+    LabeledSlider _saturationSlider;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GlobalEffectsComponent)
 };
