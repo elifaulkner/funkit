@@ -125,21 +125,21 @@ void HiHat::pitchWheelMoved (int newPitchWheelValue) {
 std::vector<std::unique_ptr<juce::RangedAudioParameter>> HiHatParameters::getParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DECAY", 1), "Decay", juce::NormalisableRange<float> {0.01f, 1.0f, 0.01f}, 0.15f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DECAY", 1), "HiHat Decay", juce::NormalisableRange<float> {0.01f, 1.0f, 0.01f}, 0.15f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_LEVEL", 1), "Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f, 0.4f}, 0.6f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_LEVEL", 1), "HiHat Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f, 0.4f}, 0.6f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_SHAPE", 1), "Shape", juce::NormalisableRange<float> {1.00f, 5.0f, 0.1f}, 2.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_SHAPE", 1), "HiHat Shape", juce::NormalisableRange<float> {1.00f, 5.0f, 0.1f}, 2.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DRIVE", 1), "Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DRIVE", 1), "HiHat Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_NOISE", 1), "Noise", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.8f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_NOISE", 1), "HiHat Noise", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.8f));
     
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DELAY", 1), "Delay", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DELAY", 1), "HiHat Delay", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DELAY_LEVEL", 1), "Delay Level", juce::NormalisableRange<float> {0.0f, 1.0f, 0.01f, 0.4f}, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HIHAT_DELAY_LEVEL", 1), "HiHat Delay Level", juce::NormalisableRange<float> {0.0f, 1.0f, 0.01f, 0.4f}, 0.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("HIHAT_DELAY_FEEDBACK", 1), "Delay Feedback", 0, 10, 1));
+    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("HIHAT_DELAY_FEEDBACK", 1), "HiHat Delay Feedback", 0, 10, 1));
     
     return params;
 }
