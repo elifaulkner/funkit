@@ -11,7 +11,9 @@
 #include "Kick.h"
 
 Kick::Kick(GlobalEffects& global, KickParameters& parameters, int octave) :
-    _params(parameters), _octave(octave){
+    _drum(_carrier), _params(parameters), _octave(octave){
+        _noiseOperator = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
+        _carrier.addModulator(_noiseOperator);
 }
 
 Kick::~Kick() {
@@ -26,7 +28,6 @@ void Kick::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputC
     
     _drum.prepare(spec);
     _drum.setDecay(_params.getDecay());
-    _drum.setNoiseLevel(_params.getNoiseLevel());
     
     _gain.prepare(spec);
     _gain.setGainLinear(0.5f);
@@ -120,6 +121,7 @@ void Kick::setUpParameters() {
     _drum.setDecayShape(_params.getShape());
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());
+    _noiseOperator->setAmplitude(_params.getNoiseLevel());
 }
 
 void Kick::pitchWheelMoved (int newPitchWheelValue)

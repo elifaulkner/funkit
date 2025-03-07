@@ -46,6 +46,8 @@ class Kick : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
 
+    FMCarrier _carrier;
+    FMOperator* _noiseOperator;
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;

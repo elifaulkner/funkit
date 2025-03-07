@@ -11,9 +11,10 @@
 #include "Snare.h"
 
 Snare::Snare(GlobalEffects& global, SnareParameters& params, int octave) :
-    _octave(octave), _params(params)
+    _drum(_carrier), _octave(octave), _params(params)
 {
-
+    _noiseOperator = new FMOperator(1.0f, 0.1f, FMSignalFunction::noise);
+    _carrier.addModulator(_noiseOperator);
 }
 
 Snare::~Snare() {
@@ -27,7 +28,6 @@ void Snare::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     
     _drum.prepare(_spec);
     _drum.setDecay(_params.getDecay());
-    _drum.setNoiseLevel(_params.getNoiseLevel());
     
     _gain.prepare(_spec);
     _gain.setGainLinear(0.4f);
@@ -146,7 +146,7 @@ void Snare::pitchWheelMoved (int newPitchWheelValue)
 
 void Snare::setUpParameters() {
     _drum.setDecay(_params.getDecay());
-    _drum.setNoiseLevel(_params.getNoiseLevel());
+    _noiseOperator->setAmplitude(_params.getNoiseLevel());
     _drum.setDecayShape(_params.getShape());
     _gate.setThreshold(_params.getNoiseGateThreshold());
     _gain.setGainLinear(_params.getLevel());

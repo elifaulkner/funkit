@@ -29,15 +29,15 @@ FunkitAudioProcessor::FunkitAudioProcessor()
 {
     _kickSynth.addSound(new SynthSound());
     _kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
-    _kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
+    //_kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
 
     _snareSynth.addSound(new SynthSound());
     _snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
-    _snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
+    //_snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
     
     _hiHatSynth.addSound(new SynthSound());
     _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters , 0));
-    _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters, 0));
+    //_hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters, 0));
 }
 
 FunkitAudioProcessor::~FunkitAudioProcessor()

@@ -10,8 +10,11 @@
         <GROUP id="{52971DCB-00C7-3097-4821-C0EECC30D524}" name="FM">
           <FILE id="EEkktg" name="FMCarrier.cpp" compile="1" resource="0" file="Source/Util/FM/FMCarrier.cpp"/>
           <FILE id="dd6zTU" name="FMCarrier.h" compile="0" resource="0" file="Source/Util/FM/FMCarrier.h"/>
+          <FILE id="OOenyg" name="FMHeader.h" compile="0" resource="0" file="Source/Util/FM/FMHeader.h"/>
           <FILE id="WM3u7q" name="FMOperator.cpp" compile="1" resource="0" file="Source/Util/FM/FMOperator.cpp"/>
           <FILE id="A5BBTz" name="FMOperator.h" compile="0" resource="0" file="Source/Util/FM/FMOperator.h"/>
+          <FILE id="j76jYW" name="FMSignal.cpp" compile="1" resource="0" file="Source/Util/FM/FMSignal.cpp"/>
+          <FILE id="OGhcqS" name="FMSignal.h" compile="0" resource="0" file="Source/Util/FM/FMSignal.h"/>
         </GROUP>
         <FILE id="kt1ReB" name="Delay.cpp" compile="1" resource="0" file="Source/Util/Delay.cpp"/>
         <FILE id="iutbPS" name="Delay.h" compile="0" resource="0" file="Source/Util/Delay.h"/>

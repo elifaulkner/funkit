@@ -10,14 +10,21 @@
 
 #include "DrumOscillator.h"
 
+DrumOscillator::DrumOscillator(FMCarrier& carrier) : _carrier(carrier) {
+}
+
+DrumOscillator::~DrumOscillator() {
+}
+
 void DrumOscillator::prepare(juce::dsp::ProcessSpec& spec) {
     _spec = spec;
-    _phase.reset();
+    _carrier.prepare(spec);
 }
 
 void DrumOscillator::noteOn() {
     _envelopeCounter = 0;
     _envelopeSamples = _decay*_spec.sampleRate;
+    _carrier.reset();
 }
 
 void DrumOscillator::noteOff() {
@@ -30,20 +37,12 @@ void DrumOscillator::reset() {
 
 void DrumOscillator::setFrequency(float frequency)
 {
-    _frequency = std::max(1.0f, frequency);
+    _carrier.setFrequency(frequency);
 }
 
 void DrumOscillator::setDecay(float decay)
 {
     _decay = decay;
-}
-
-void DrumOscillator::setNoiseLevel(float noiseLevel) {
-    _noiseLevel = noiseLevel;
-}
-
-void DrumOscillator::setUseWave(bool value) {
-    _useWave = value;
 }
 
 void DrumOscillator::setDecayShape(float shape) {

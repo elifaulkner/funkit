@@ -13,32 +13,13 @@
 #include <JuceHeader.h>
 #include "FMOperator.h"
 
-class FMCarrier {
+class FMCarrier : public FMOperator {
     public:
-    FMCarrier();
+    FMCarrier(float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sin);
     ~FMCarrier();
-    void addModulator(FMOperator* modulator);
-    void setFrequency(float frequency);
     void prepare(juce::dsp::ProcessSpec& spec);
-    template <typename ProcessContext> void process (const ProcessContext& context) noexcept
-    {
-        auto&& buffer = context.getOutputBlock();
-        
-        float baseIncrement = juce::MathConstants<float>::twoPi / _spec.sampleRate;
-
-        for(int s = 0; s < buffer.getNumSamples(); ++s) {
-            float fm = 0.0f;
-            for(auto m : _modulators) {
-                fm += m->getSample(s);
-            }
-            for(int c = 0; c < buffer.getNumChannels(); ++c) {
-                buffer.setSample(c, s, std::sin(_phase.advance(baseIncrement*_frequency)+fm-juce::MathConstants<float>::pi));
-            }
-        }
-    }
+    void setFrequency(float frequency);
+    float nextSample(float pitchEnvelope);
+    void reset();
     private:
-    juce::dsp::ProcessSpec _spec;
-    juce::dsp::Phase<float> _phase;
-    std::list<FMOperator*> _modulators = {};
-    float _frequency = 0;
 };

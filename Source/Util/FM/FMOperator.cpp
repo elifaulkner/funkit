@@ -10,11 +10,14 @@
 
 #include "FMOperator.h"
 
-FMOperator::FMOperator(float ratio, float amplitude): _ratio(ratio), _amplitude(amplitude) {
+FMOperator::FMOperator(float ratio, float amplitude, FMSignalFunction function): _ratio(ratio), _amplitude(amplitude) {
+    _signal.setFunction(function);
 }
 
 FMOperator::~FMOperator() {
-
+    for(auto m : _modulators) {
+        delete m;
+    }
 }
 
 void FMOperator::setAmplitude(float amplitude) {
@@ -23,12 +26,20 @@ void FMOperator::setAmplitude(float amplitude) {
     _amplitude = amplitude;
 }
 
+void FMOperator::reset() {
+    _phase.reset();
+}
+
 void FMOperator::setRatio(float ratio) {
     _ratio = ratio;
 }
 
 void FMOperator::setFrequency(float frequency) {
     _frequency = frequency;
+}
+
+void FMOperator::setSignal(FMSignalFunction function) {
+    _signal.setFunction(function);
 }
 
 void FMOperator::addModulator(FMOperator* modulator) {
@@ -40,11 +51,11 @@ void FMOperator::prepare(juce::dsp::ProcessSpec& spec) {
     _phase.reset();
 }
 
-float FMOperator::getSample(int sampleIndex) {
+float FMOperator::nextSample(float pitchEnvelope) {
     float baseIncrement = juce::MathConstants<float>::twoPi / _spec.sampleRate;
     float fm = 0.0f;
     for(auto m : _modulators) {
-        fm += m->getSample(sampleIndex);
+        fm += m->nextSample(pitchEnvelope);
     }
-    return std::sin(_phase.advance(baseIncrement*_frequency*_ratio)+fm-juce::MathConstants<float>::pi)*_amplitude;
+    return _signal.eval(_phase.advance(baseIncrement*_frequency*_ratio*pitchEnvelope)+fm-juce::MathConstants<float>::pi)*_amplitude;
 }
