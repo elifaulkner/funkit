@@ -7,6 +7,12 @@
   <MAINGROUP id="tpqyIe" name="Funkit">
     <GROUP id="{3D010F12-4449-5F8C-3191-8695DDDBE984}" name="Source">
       <GROUP id="{6A380B03-5F60-97D7-3F5E-08AD1BF57FDA}" name="Util">
+        <GROUP id="{52971DCB-00C7-3097-4821-C0EECC30D524}" name="FM">
+          <FILE id="EEkktg" name="FMCarrier.cpp" compile="1" resource="0" file="Source/Util/FM/FMCarrier.cpp"/>
+          <FILE id="dd6zTU" name="FMCarrier.h" compile="0" resource="0" file="Source/Util/FM/FMCarrier.h"/>
+          <FILE id="WM3u7q" name="FMOperator.cpp" compile="1" resource="0" file="Source/Util/FM/FMOperator.cpp"/>
+          <FILE id="A5BBTz" name="FMOperator.h" compile="0" resource="0" file="Source/Util/FM/FMOperator.h"/>
+        </GROUP>
         <FILE id="kt1ReB" name="Delay.cpp" compile="1" resource="0" file="Source/Util/Delay.cpp"/>
         <FILE id="iutbPS" name="Delay.h" compile="0" resource="0" file="Source/Util/Delay.h"/>
         <FILE id="i15A28" name="DrumOscillator.cpp" compile="1" resource="0"
