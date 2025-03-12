@@ -11,9 +11,12 @@
 #include "Kick.h"
 
 Kick::Kick(GlobalEffects& global, KickParameters& parameters, int octave) :
-    _drum(_carrier), _params(parameters), _octave(octave){
+    _drum(_carrier, _impactCarrier), _params(parameters), _octave(octave){
         _noiseOperator = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
-        _carrier.addModulator(_noiseOperator);
+        _impactCarrier.addModulator(_noiseOperator);
+        
+        _op1 = new FMOperator(4.0f, 0.6f, FMSignalFunction::sin);
+        _carrier.addModulator(_op1);
 }
 
 Kick::~Kick() {

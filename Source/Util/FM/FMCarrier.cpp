@@ -47,5 +47,5 @@ float FMCarrier::nextSample(float pitchEnvelope) {
     for(auto m : _modulators) {
         fm += m->nextSample(pitchEnvelope);
     }
-    return _signal.eval(_phase.advance(baseIncrement*_frequency*pitchEnvelope)+fm-juce::MathConstants<float>::pi);
+    return _signal.eval(_phase.advance(baseIncrement*_frequency*pitchEnvelope)+fm-juce::MathConstants<float>::pi)*_amplitude;
 }

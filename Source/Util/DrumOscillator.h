@@ -15,7 +15,7 @@
 
 class DrumOscillator {
     public:
-    DrumOscillator(FMCarrier& carrier);
+    DrumOscillator(FMCarrier& carrier, FMCarrier& impactCarrier);
     ~DrumOscillator();
     void prepare(juce::dsp::ProcessSpec& spec);
     template <typename ProcessContext> void process (const ProcessContext& context) noexcept
@@ -27,10 +27,15 @@ class DrumOscillator {
             envelopeValue = std::pow(envelopeValue, _decayShape);
             _envelopeCounter++;
             
+            float impactEnvelopeValue = std::max(0.0f, (_impactEnvelopeSamples-_impactEnvelopeCounter)/(_impactEnvelopeSamples));
+            impactEnvelopeValue = std::pow(impactEnvelopeValue, 2.0f);
+            _impactEnvelopeCounter++;
+            
+            float impactValue = _impactCarrier.nextSample(impactEnvelopeValue);
             float value = _carrier.nextSample(envelopeValue);
 
             for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
-                outputBuffer.setSample(c, s, value*envelopeValue);
+                outputBuffer.setSample(c, s, value*envelopeValue+impactValue*impactEnvelopeValue);
             }
 
             float adjVelocity = std::pow(_velocity, 1.25);
@@ -49,6 +54,7 @@ class DrumOscillator {
     
     private:
     FMCarrier _carrier;
+    FMCarrier _impactCarrier;
     juce::dsp::ProcessSpec _spec;
     FMOperator* _noiseOperator;
     float _envelopeValue = 0.0;
@@ -56,5 +62,11 @@ class DrumOscillator {
     float _decayShape = 2.0;
     float _envelopeCounter = 0.0;
     int _envelopeSamples = 0.0;
+    
+    float _impactEnvelopeValue = 0.0;
+    float _impactDecay = 0.15;
+    float _impactEnvelopeCounter = 0.0;
+    int _impactEnvelopeSamples = 0.0;
+
     float _velocity = 1.0f;
 };

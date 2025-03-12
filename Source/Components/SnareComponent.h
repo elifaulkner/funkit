@@ -40,6 +40,7 @@ private:
     LabeledSlider _reverbSlider;
     LabeledSlider _reverbSizeSlider;
     LabeledSlider _gateSlider;
+    LabeledSlider _impactSlider;
     
     juce::TextButton _trigger;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SnareComponent)

@@ -26,6 +26,7 @@ class SnareParameters {
     float getReverb();
     float getReverbSize();
     float getShape();
+    float getImpact();
     int getNote();
     float getNoiseGateThreshold();
     
@@ -51,7 +52,9 @@ class Snare : public juce::SynthesiserVoice {
     bool _isPrepared = false;
     
     FMCarrier _carrier;
+    FMCarrier _impactCarrier {1.0f, 0.1f, FMSignalFunction::square};
     FMOperator* _noiseOperator;
+    FMOperator* _op1;
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;
