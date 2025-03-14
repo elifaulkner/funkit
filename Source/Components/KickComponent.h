@@ -36,6 +36,8 @@ private:
     LabeledSlider _driveSlider;
     LabeledSlider _noiseSlider;
     LabeledSlider _shapeSlider;
+    LabeledSlider _fmSlider;
+    LabeledSlider _impactSlider;
     
     juce::TextButton _trigger;
     

@@ -23,6 +23,9 @@ class KickParameters {
     float getNoiseLevel();
     float getShape();
     int getNote();
+    float getFMAmount();
+    float getImpact();
+    
     private:
 
     juce::AudioProcessorValueTreeState& _apvts;
@@ -47,7 +50,7 @@ class Kick : public juce::SynthesiserVoice {
     bool _isPrepared = false;
 
     FMCarrier _carrier;
-    FMCarrier _impactCarrier;
+    FMCarrier _impactCarrier {1.0f, 1.0f, FMSignalFunction::noise};
     FMOperator* _noiseOperator;
     FMOperator* _op1;
     

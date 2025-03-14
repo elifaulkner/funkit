@@ -11,9 +11,10 @@
 #include "HiHat.h"
 
 HiHat::HiHat(GlobalEffects& global, HiHatParameters& parameters, int octave) :
-    _drum(_carrier, _impactCarrier),
+    _drum(),
     _params(parameters),
     _octave(octave) {
+        _drum.setupCarriers(_carrier, _impactCarrier);
 }
 
 HiHat::~HiHat() {

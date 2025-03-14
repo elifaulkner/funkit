@@ -11,12 +11,14 @@
 #include "Kick.h"
 
 Kick::Kick(GlobalEffects& global, KickParameters& parameters, int octave) :
-    _drum(_carrier, _impactCarrier), _params(parameters), _octave(octave){
+    _drum(), _params(parameters), _octave(octave){
         _noiseOperator = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
-        _impactCarrier.addModulator(_noiseOperator);
+        _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
         
-        _op1 = new FMOperator(4.0f, 0.6f, FMSignalFunction::sin);
         _carrier.addModulator(_op1);
+        _carrier.addModulator(_noiseOperator);
+        
+        _drum.setupCarriers(_carrier, _impactCarrier);
 }
 
 Kick::~Kick() {
@@ -125,6 +127,8 @@ void Kick::setUpParameters() {
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());
     _noiseOperator->setAmplitude(_params.getNoiseLevel());
+    _op1->setAmplitude(_params.getFMAmount());
+    _impactCarrier.setAmplitude(_params.getImpact());
 }
 
 void Kick::pitchWheelMoved (int newPitchWheelValue)
@@ -166,6 +170,14 @@ int KickParameters::getNote() {
     return _apvts.getRawParameterValue("KICK_NOTE")->load();
 }
 
+float KickParameters::getImpact() {
+    return _apvts.getRawParameterValue("KICK_IMPACT")->load();
+}
+
+float KickParameters::getFMAmount() {
+    return _apvts.getRawParameterValue("KICK_FM")->load();
+}
+
 std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     
@@ -180,6 +192,11 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getPara
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_NOISE", 1), "Kick Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.125f));
 
     params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("KICK_NOTE", 1), "Kick Note", 24, 36, 33));
+    
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_IMPACT", 1), "Kick Impact", juce::NormalisableRange<float> {0.0001f, 1.0f, 0.0001f, 0.25f}, 0.05f));
+
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_FM", 1), "Kick FM", juce::NormalisableRange<float> {0.0f, 1.0f, 0.001f, 0.25f}, 0.5f));
+
     
     return params;
 }

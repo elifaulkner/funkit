@@ -10,11 +10,16 @@
 
 #include "DrumOscillator.h"
 
-DrumOscillator::DrumOscillator(FMCarrier& carrier, FMCarrier& impactCarrier) : _carrier(carrier), _impactCarrier(impactCarrier) {
+DrumOscillator::DrumOscillator() {
     
 }
 
 DrumOscillator::~DrumOscillator() {
+}
+
+void DrumOscillator::setupCarriers(FMCarrier& carrier, FMCarrier& impactCarrier) {
+    _carrier = carrier;
+    impactCarrier = impactCarrier;
 }
 
 void DrumOscillator::prepare(juce::dsp::ProcessSpec& spec) {
@@ -50,6 +55,11 @@ void DrumOscillator::setFrequency(float frequency)
 void DrumOscillator::setDecay(float decay)
 {
     _decay = decay;
+}
+
+void DrumOscillator::setImpactDecay(float decay)
+{
+    _impactDecay = decay;
 }
 
 void DrumOscillator::setDecayShape(float shape) {

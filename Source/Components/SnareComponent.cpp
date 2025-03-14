@@ -24,6 +24,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _reverbSizeSlider("Verb Size", apvts, "SNARE_REVERB_SIZE"),
     _gateSlider("Gate", apvts, "SNARE_GATE_THRESHOLD"),
     _impactSlider("Impact", apvts, "SNARE_IMPACT"),
+    _fmSlider("FM", apvts, "SNARE_FM"),
     _trigger("Trigger (D2)")
 {
     addAndMakeVisible(_noteSlider);
@@ -36,6 +37,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     addAndMakeVisible(_reverbSizeSlider);
     addAndMakeVisible(_gateSlider);
     addAndMakeVisible(_impactSlider);
+    addAndMakeVisible(_fmSlider);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
@@ -72,6 +74,7 @@ void SnareComponent::resized()
     _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
     _impactSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _fmSlider.setBounds(area.removeFromLeft(sliderWidth));
     _reverbSlider.setBounds(area.removeFromLeft(sliderWidth));
     _reverbSizeSlider.setBounds(area.removeFromLeft(sliderWidth));
     _gateSlider.setBounds(area.removeFromLeft(sliderWidth));

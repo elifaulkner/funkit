@@ -57,5 +57,11 @@ float FMOperator::nextSample(float pitchEnvelope) {
     for(auto m : _modulators) {
         fm += m->nextSample(pitchEnvelope);
     }
-    return _signal.eval(_phase.advance(baseIncrement*_frequency*_ratio*pitchEnvelope)+fm-juce::MathConstants<float>::pi)*_amplitude;
+    float val = _signal.eval(_phase.advance(baseIncrement*_frequency*_ratio*pitchEnvelope)+fm-juce::MathConstants<float>::pi)*_amplitude;
+    
+    if(pitchEnvelope > 0.1) {
+        //std::cout << "Operator: " << "Val " << val << " FM " << fm << std::endl;
+    }
+    
+    return val;
 }
