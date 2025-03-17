@@ -52,6 +52,9 @@
               file="Source/Components/SnareComponent.cpp"/>
         <FILE id="br9MMm" name="SnareComponent.h" compile="0" resource="0"
               file="Source/Components/SnareComponent.h"/>
+        <FILE id="iXR08N" name="WoodComponent.cpp" compile="1" resource="0"
+              file="Source/Components/WoodComponent.cpp"/>
+        <FILE id="n3lgER" name="WoodComponent.h" compile="0" resource="0" file="Source/Components/WoodComponent.h"/>
       </GROUP>
       <GROUP id="{87BBEEB9-4F6C-91DF-DF89-01DD099D3F33}" name="Drums">
         <FILE id="ngpsgm" name="HiHat.cpp" compile="1" resource="0" file="Source/Drums/HiHat.cpp"/>
@@ -60,6 +63,8 @@
         <FILE id="Bt3EMT" name="Kick.h" compile="0" resource="0" file="Source/Drums/Kick.h"/>
         <FILE id="NwGciI" name="Snare.cpp" compile="1" resource="0" file="Source/Drums/Snare.cpp"/>
         <FILE id="zEbpA7" name="Snare.h" compile="0" resource="0" file="Source/Drums/Snare.h"/>
+        <FILE id="k12Ndv" name="Wood.cpp" compile="1" resource="0" file="Source/Drums/Wood.cpp"/>
+        <FILE id="UcSall" name="Wood.h" compile="0" resource="0" file="Source/Drums/Wood.h"/>
       </GROUP>
       <FILE id="jOPouY" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

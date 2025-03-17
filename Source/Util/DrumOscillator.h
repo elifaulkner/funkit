@@ -44,6 +44,7 @@ class DrumOscillator {
             }
         }
     }
+    
     void noteOn();
     void noteOff();
     void setFrequency(float frequency);

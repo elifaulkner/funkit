@@ -10,7 +10,7 @@
 
 #include "Kick.h"
 
-Kick::Kick(GlobalEffects& global, KickParameters& parameters, int octave) :
+Kick::Kick(KickParameters& parameters, int octave) :
     _drum(_carrier, _impactCarrier), _params(parameters), _octave(octave){
         _noiseOperator = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
         _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);

@@ -33,7 +33,7 @@ class KickParameters {
 
 class Kick : public juce::SynthesiserVoice {
     public:
-    Kick(GlobalEffects& global, KickParameters& parameters, int octave = 0);
+    Kick(KickParameters& parameters, int octave = 0);
     ~Kick();
     bool canPlaySound (juce::SynthesiserSound *) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;

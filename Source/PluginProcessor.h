@@ -12,6 +12,7 @@
 #include "Drums/Kick.h"
 #include "Drums/Snare.h"
 #include "Drums/HiHat.h"
+#include "Drums/Wood.h"
 #include "SynthSound.h"
 
 //==============================================================================
@@ -62,6 +63,7 @@ public:
     void triggerKick(float velocity);
     void triggerSnare(float velocity);
     void triggerHiHat(float velocity);
+    void triggerWood(float velocity);
 private:
     juce::AudioProcessorValueTreeState _apvts;
     
@@ -73,6 +75,9 @@ private:
     
     juce::Synthesiser _hiHatSynth;
     HiHatParameters _hiHatParameters;
+
+    juce::Synthesiser _woodSynth;
+    WoodParameters _woodParameters;
 
     GlobalEffectsParameters _globalParams;
     GlobalEffects _global;
