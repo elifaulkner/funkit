@@ -67,3 +67,7 @@ void DrumOscillator::setDecayShape(float shape) {
 void DrumOscillator::setVelocity(float velocity) {
     _velocity = velocity;
 }
+
+void DrumOscillator::setPitchEnvelope(bool pitchEnvelope) {
+    _pitchEnvelope = pitchEnvelope;
+}

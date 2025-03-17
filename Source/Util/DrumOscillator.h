@@ -31,8 +31,8 @@ class DrumOscillator {
             impactEnvelopeValue = std::pow(impactEnvelopeValue, 2.0f);
             _impactEnvelopeCounter++;
             
-            float impactValue = _impactCarrier->nextSample(impactEnvelopeValue);
-            float value = _carrier->nextSample(envelopeValue);
+            float impactValue = _impactCarrier->nextSample(_pitchEnvelope? impactEnvelopeValue : 1.0f);
+            float value = _carrier->nextSample(_pitchEnvelope? envelopeValue : 1.0f);
 
             for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
                 outputBuffer.setSample(c, s, value*envelopeValue+impactValue*impactEnvelopeValue);
@@ -51,6 +51,7 @@ class DrumOscillator {
     void setImpactDecay(float decay);
     void setDecayShape(float shape);
     void setVelocity(float velocity);
+    void setPitchEnvelope(bool pitchEnvelope);
     void reset();
     
     private:
@@ -63,6 +64,7 @@ class DrumOscillator {
     float _decayShape = 2.0;
     float _envelopeCounter = 0.0;
     int _envelopeSamples = 0.0;
+    bool _pitchEnvelope = true;
     
     float _impactEnvelopeValue = 0.0;
     float _impactDecay = 0.075;
