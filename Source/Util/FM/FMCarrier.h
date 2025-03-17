@@ -16,7 +16,9 @@
 class FMCarrier : public FMOperator {
     public:
     FMCarrier(float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sin);
+    FMCarrier(FMCarrier& copy);
     ~FMCarrier();
+    FMCarrier& operator=(const FMCarrier& other);
     void prepare(juce::dsp::ProcessSpec& spec);
     void setFrequency(float frequency);
     float nextSample(float pitchEnvelope);

@@ -11,10 +11,9 @@
 #include "HiHat.h"
 
 HiHat::HiHat(GlobalEffects& global, HiHatParameters& parameters, int octave) :
-    _drum(),
+    _drum(_carrier, _impactCarrier),
     _params(parameters),
     _octave(octave) {
-        _drum.setupCarriers(_carrier, _impactCarrier);
 }
 
 HiHat::~HiHat() {
@@ -145,7 +144,7 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> HiHatParameters::getPar
 
 void HiHat::setUpParameters() {
     _drum.setDecay(_params.getDecay());
-    _carrier.setAmplitude(_params.getNoiseLevel());
+    _carrier->setAmplitude(_params.getNoiseLevel());
     _drum.setDecayShape(_params.getShape());
     _gain.setGainLinear(_params.getLevel());
     _filter.setDrive(_params.getDrive());

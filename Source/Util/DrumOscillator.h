@@ -15,10 +15,9 @@
 
 class DrumOscillator {
     public:
-    DrumOscillator();
+    DrumOscillator(FMCarrier* carrier, FMCarrier* impactCarrier);
     ~DrumOscillator();
     void prepare(juce::dsp::ProcessSpec& spec);
-    void setupCarriers(FMCarrier& carrier, FMCarrier& impactCarrier);
     template <typename ProcessContext> void process (const ProcessContext& context) noexcept
     {
         juce::dsp::AudioBlock<float> outputBuffer = context.getOutputBlock();
@@ -32,8 +31,8 @@ class DrumOscillator {
             impactEnvelopeValue = std::pow(impactEnvelopeValue, 2.0f);
             _impactEnvelopeCounter++;
             
-            float impactValue = _impactCarrier.nextSample(impactEnvelopeValue);
-            float value = _carrier.nextSample(envelopeValue);
+            float impactValue = _impactCarrier->nextSample(impactEnvelopeValue);
+            float value = _carrier->nextSample(envelopeValue);
 
             for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
                 outputBuffer.setSample(c, s, value*envelopeValue+impactValue*impactEnvelopeValue);
@@ -55,8 +54,8 @@ class DrumOscillator {
     void reset();
     
     private:
-    FMCarrier _carrier;
-    FMCarrier _impactCarrier;
+    FMCarrier* _carrier;
+    FMCarrier* _impactCarrier;
     juce::dsp::ProcessSpec _spec;
     FMOperator* _noiseOperator;
     float _envelopeValue = 0.0;

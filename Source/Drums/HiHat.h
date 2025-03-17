@@ -51,8 +51,8 @@ class HiHat : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
 
-    FMCarrier _carrier {1.0f, 1.0f, FMSignalFunction::noise};
-    FMCarrier _impactCarrier {1.0f, 0.0f, FMSignalFunction::noise};
+    FMCarrier* _carrier = new FMCarrier(1.0f, 1.0f, FMSignalFunction::noise);
+    FMCarrier* _impactCarrier = new FMCarrier(1.0f, 0.0f, FMSignalFunction::noise);
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;

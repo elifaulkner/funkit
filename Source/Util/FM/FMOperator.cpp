@@ -14,9 +14,33 @@ FMOperator::FMOperator(float ratio, float amplitude, FMSignalFunction function):
     _signal.setFunction(function);
 }
 
+FMOperator::FMOperator(FMOperator& copy) {
+    _ratio = copy._ratio;
+    _amplitude = copy._amplitude;
+    _frequency = copy._frequency;
+    _signal = copy._signal;
+    _spec = copy._spec;
+    for(auto m : copy._modulators) {
+        _modulators.push_back(new FMOperator(*m));
+    }
+}
+
+FMOperator& FMOperator::operator=(const FMOperator& copy) {
+    _ratio = copy._ratio;
+    _amplitude = copy._amplitude;
+    _frequency = copy._frequency;
+    _signal = copy._signal;
+    _spec = copy._spec;
+    for(auto m : copy._modulators) {
+        _modulators.push_back(new FMOperator(*m));
+    }
+    return *this;
+}
+
 FMOperator::~FMOperator() {
-    for(auto m : _modulators) {
-        delete m;
+    while(!_modulators.empty()) {
+        delete _modulators.front();
+        _modulators.pop_front();
     }
 }
 

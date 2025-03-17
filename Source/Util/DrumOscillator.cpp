@@ -10,22 +10,20 @@
 
 #include "DrumOscillator.h"
 
-DrumOscillator::DrumOscillator() {
-    
+DrumOscillator::DrumOscillator(FMCarrier* carrier, FMCarrier* impactCarrier) {
+    _carrier = carrier;
+    _impactCarrier = impactCarrier;
 }
 
 DrumOscillator::~DrumOscillator() {
-}
-
-void DrumOscillator::setupCarriers(FMCarrier& carrier, FMCarrier& impactCarrier) {
-    _carrier = carrier;
-    impactCarrier = impactCarrier;
+    delete _carrier;
+    delete _impactCarrier;
 }
 
 void DrumOscillator::prepare(juce::dsp::ProcessSpec& spec) {
     _spec = spec;
-    _carrier.prepare(spec);
-    _impactCarrier.prepare(spec);
+    _carrier->prepare(spec);
+    _impactCarrier->prepare(spec);
 }
 
 void DrumOscillator::noteOn() {
@@ -33,8 +31,8 @@ void DrumOscillator::noteOn() {
     _impactEnvelopeCounter = 0;
     _envelopeSamples = _decay*_spec.sampleRate;
     _impactEnvelopeSamples = _impactDecay*_spec.sampleRate;
-    _carrier.reset();
-    _impactCarrier.reset();
+    _carrier->reset();
+    _impactCarrier->reset();
 }
 
 void DrumOscillator::noteOff() {
@@ -48,8 +46,8 @@ void DrumOscillator::reset() {
 
 void DrumOscillator::setFrequency(float frequency)
 {
-    _carrier.setFrequency(frequency);
-    _impactCarrier.setFrequency(frequency);
+    _carrier->setFrequency(frequency);
+    _impactCarrier->setFrequency(frequency);
 }
 
 void DrumOscillator::setDecay(float decay)

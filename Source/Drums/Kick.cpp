@@ -11,14 +11,14 @@
 #include "Kick.h"
 
 Kick::Kick(GlobalEffects& global, KickParameters& parameters, int octave) :
-    _drum(), _params(parameters), _octave(octave){
+    _drum(_carrier, _impactCarrier), _params(parameters), _octave(octave){
         _noiseOperator = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
         _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
         
-        _carrier.addModulator(_op1);
-        _carrier.addModulator(_noiseOperator);
+        _carrier->addModulator(_op1);
+        _carrier->addModulator(_noiseOperator);
         
-        _drum.setupCarriers(_carrier, _impactCarrier);
+        //_drum.setupCarriers(_carrier, _impactCarrier);
 }
 
 Kick::~Kick() {
@@ -128,7 +128,7 @@ void Kick::setUpParameters() {
     _filter.setDrive(_params.getDrive());
     _noiseOperator->setAmplitude(_params.getNoiseLevel());
     _op1->setAmplitude(_params.getFMAmount());
-    _impactCarrier.setAmplitude(_params.getImpact());
+    _impactCarrier->setAmplitude(_params.getImpact());
 }
 
 void Kick::pitchWheelMoved (int newPitchWheelValue)
@@ -189,8 +189,9 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getPara
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_DRIVE", 1), "Kick Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 1.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_NOISE", 1), "Kick Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.125f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_NOISE", 1), "Kick Noise", juce::NormalisableRange<float> {0.00f, 0.25f, 0.00001f, 0.2f}, 0.01f));
 
+    
     params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("KICK_NOTE", 1), "Kick Note", 24, 36, 33));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_IMPACT", 1), "Kick Impact", juce::NormalisableRange<float> {0.0001f, 1.0f, 0.0001f, 0.25f}, 0.05f));

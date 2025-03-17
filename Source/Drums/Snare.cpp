@@ -11,14 +11,12 @@
 #include "Snare.h"
 
 Snare::Snare(GlobalEffects& global, SnareParameters& params, int octave) :
-_drum(), _octave(octave), _params(params)
+_drum(_carrier, _impactCarrier), _octave(octave), _params(params)
 {
     _noiseOperator = new FMOperator(1.0f, 0.3f, FMSignalFunction::noise);
     _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
-    _carrier.addModulator(_op1);
-    _carrier.addModulator(_noiseOperator);
-    
-    _drum.setupCarriers(_carrier, _impactCarrier);
+    _carrier->addModulator(_op1);
+    _carrier->addModulator(_noiseOperator);
 }
 
 Snare::~Snare() {
@@ -182,7 +180,7 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_DRIVE", 1), "Snare Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 2.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_NOISE", 1), "Snare Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.3f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_NOISE", 1), "Snare Noise", juce::NormalisableRange<float> {0.00f, 0.25f, 0.00001f, 0.2f}, 0.01f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_REVERB", 1), "Snare Reverb", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     

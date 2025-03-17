@@ -16,7 +16,9 @@
 class FMOperator {
     public:
     FMOperator(float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sin);
+    FMOperator(FMOperator& copy);
     ~FMOperator();
+    FMOperator& operator=(const FMOperator& other);
     void setFrequency(float frequency);
     void setRatio(float ratio);
     void setAmplitude(float amplitude);
