@@ -73,6 +73,9 @@ void FMOperator::addModulator(FMOperator* modulator) {
 void FMOperator::prepare(juce::dsp::ProcessSpec& spec) {
     _spec = spec;
     _phase.reset();
+    for(auto m : _modulators) {
+        m->prepare(spec);
+    }
 }
 
 float FMOperator::nextSample(float pitchEnvelope) {

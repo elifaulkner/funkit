@@ -16,7 +16,13 @@ WoodComponent::WoodComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
 _trigger("Trigger (G2)"),
 _noteSlider("Tune", apvts, "WOOD_NOTE"),
 _levelSlider("Level", apvts, "WOOD_LEVEL"),
-_decaySlider("Decay", apvts, "WOOD_DECAY")
+_decaySlider("Decay", apvts, "WOOD_DECAY"),
+_shapeSlider("Shape", apvts, "WOOD_SHAPE"),
+_cutoffSlider("Filter Cutoff", apvts, "WOOD_CUTOFF"),
+_ratioM1Slider("FM M1 Ratio", apvts, "WOOD_FM_RATIO_M1"),
+_ratioM2Slider("FM M2 Ratio", apvts, "WOOD_FM_RATIO_M2"),
+_reverbSlider("Reverb", apvts, "WOOD_REVERB"),
+_reverbSizeSlider("Reverb Size", apvts, "WOOD_REVERB_SIZE")
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
@@ -24,6 +30,17 @@ _decaySlider("Decay", apvts, "WOOD_DECAY")
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);
+    addAndMakeVisible(_shapeSlider);
+    addAndMakeVisible(_cutoffSlider);
+    addAndMakeVisible(_ratioM1Slider);
+    addAndMakeVisible(_ratioM2Slider);
+    addAndMakeVisible(_reverbSlider);
+    addAndMakeVisible(_reverbSizeSlider);
+    
+    _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
+    _label.setJustificationType(juce::Justification::centred);
+    _label.setFont(22);
+    addAndMakeVisible(_label);
     
     _trigger.addListener(this);
 }
@@ -50,6 +67,12 @@ void WoodComponent::resized()
     _noteSlider.setBounds(area.removeFromLeft(sliderWidth));
     _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
     _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
+    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _cutoffSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _ratioM1Slider.setBounds(area.removeFromLeft(sliderWidth));
+    _ratioM2Slider.setBounds(area.removeFromLeft(sliderWidth));
+    _reverbSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _reverbSizeSlider.setBounds(area.removeFromLeft(sliderWidth));
     
     _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
 

@@ -20,7 +20,13 @@ class WoodParameters {
     ~WoodParameters();
     int getNote();
     float getDecay();
+    float getShape();
     float getLevel();
+    float getCutoff();
+    float getReverbSize();
+    float getReverb();
+    float getRatioM1();
+    float getRatioM2();
     
     static std::vector<std::unique_ptr<juce::RangedAudioParameter>> getParameters();
     private:
@@ -29,33 +35,37 @@ class WoodParameters {
 
 class Wood : public juce::SynthesiserVoice {
     public:
-        Wood(WoodParameters& parameters, int octave = 0);
-        ~Wood();
-        bool canPlaySound (juce::SynthesiserSound *) override;
-        void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
-        void stopNote (float velocity, bool allowTailOff) override;
-        void controllerMoved (int controllerNumber, int newControllerValue)  override;
-        void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
-        void pitchWheelMoved (int newPitchWheelValue) override;
-        
-        void prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputChannels);
+    Wood(WoodParameters& parameters, int octave = 0);
+    ~Wood();
+    bool canPlaySound (juce::SynthesiserSound *) override;
+    void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
+    void stopNote (float velocity, bool allowTailOff) override;
+    void controllerMoved (int controllerNumber, int newControllerValue)  override;
+    void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples) override;
+    void pitchWheelMoved (int newPitchWheelValue) override;
+    
+    void prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputChannels);
     private:
-        bool _isPrepared = false;
+    bool _isPrepared = false;
 
-        FMCarrier* _c1 = new FMCarrier();
-        FMCarrier* _c2 = new FMCarrier();
-        FMOperator* _m1 = new FMOperator();
-        FMOperator* _m2 = new FMOperator();
-        
-        juce::ADSR _adsr;
-        juce::ADSR::Parameters _adsrParams {0.001f, 0.2f, 0.0f, 0.0f};
+    FMCarrier* _c1 = new FMCarrier();
+    FMCarrier* _c2 = new FMCarrier();
+    FMOperator* _m1 = new FMOperator();
+    FMOperator* _m2 = new FMOperator();
     
-        juce::AudioBuffer<float> _synthBuffer;
+    juce::ADSR _adsr;
+    juce::ADSR::Parameters _adsrParams {0.05, 0.2f, 0.0f, 0.1f};
 
-        juce::dsp::Gain<float> _gain;
+    juce::AudioBuffer<float> _synthBuffer;
+
+    juce::dsp::Gain<float> _gain;
+    juce::dsp::LadderFilter<float> _filter;
+    juce::Reverb _reverb;
+    juce::Reverb::Parameters _reverbParameters;
     
-        WoodParameters& _params;
-        int _octave = 0;
-        
-        void setUpParameters();
+    WoodParameters& _params;
+    int _octave = 0;
+    float _frequency = 0.0f;
+    
+    void setUpParameters();
 };
