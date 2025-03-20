@@ -34,5 +34,6 @@ class FMOperator {
     double _frequency = 0;
     double _ratio = 0;
     double _amplitude  = 1.0f;
-    FMSignal _signal;
+    FMSignal* _signal;
+    private:
 };

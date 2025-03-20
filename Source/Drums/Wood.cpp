@@ -12,8 +12,8 @@
 
 Wood::Wood(WoodParameters& parameters, int octave) : _params(parameters), _octave(octave) {
     _adsr.setParameters(_adsrParams);
-    _c1 = new FMCarrier(0.5f, 1.0f, FMSignalFunction::sin);
-    _c2 = new FMCarrier(2.0f, 1.0f, FMSignalFunction::sin);
+    _c1 = new FMOperator(0.5f, 1.0f, FMSignalFunction::sin);
+    _c2 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
     _m1 = new FMOperator(3.25f, 1.0f, FMSignalFunction::sin);
     _m2 = new FMOperator(0.5f, 1.0f, FMSignalFunction::sin);
     
@@ -207,7 +207,7 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> WoodParameters::getPara
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_REVERB_SIZE", 1), "Wood Reverb Size", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     
-    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("WOOD_NOTE", 1), "Wood Note", 36, 48, 45));
+    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("WOOD_NOTE", 1), "Wood Note", 60, 72, 57));
     
     return params;
 }

@@ -66,11 +66,11 @@ void KickComponent::resized()
     _noteSlider.setBounds(area.removeFromLeft(sliderWidth));
     _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
     _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
+    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
     _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
     _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _impactSlider.setBounds(area.removeFromLeft(sliderWidth));
     _fmSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
     
     _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
 }

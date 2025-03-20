@@ -11,14 +11,15 @@
 #include "FMOperator.h"
 
 FMOperator::FMOperator(float ratio, float amplitude, FMSignalFunction function): _ratio(ratio), _amplitude(amplitude) {
-    _signal.setFunction(function);
+    _signal = new FMSignal();
+    _signal->setFunction(function);
 }
 
 FMOperator::FMOperator(FMOperator& copy) {
     _ratio = copy._ratio;
     _amplitude = copy._amplitude;
     _frequency = copy._frequency;
-    _signal = copy._signal;
+    _signal = new FMSignal(*copy._signal);
     _spec = copy._spec;
     for(auto m : copy._modulators) {
         _modulators.push_back(new FMOperator(*m));
@@ -42,6 +43,7 @@ FMOperator::~FMOperator() {
         delete _modulators.front();
         _modulators.pop_front();
     }
+    delete _signal;
 }
 
 void FMOperator::setAmplitude(float amplitude) {
@@ -63,7 +65,7 @@ void FMOperator::setFrequency(float frequency) {
 }
 
 void FMOperator::setSignal(FMSignalFunction function) {
-    _signal.setFunction(function);
+    _signal->setFunction(function);
 }
 
 void FMOperator::addModulator(FMOperator* modulator) {
@@ -84,11 +86,7 @@ float FMOperator::nextSample(float pitchEnvelope) {
     for(auto m : _modulators) {
         fm += m->nextSample(pitchEnvelope);
     }
-    float val = _signal.eval(_phase.advance(baseIncrement*_frequency*_ratio*pitchEnvelope)+fm-juce::MathConstants<float>::pi)*_amplitude;
-    
-    if(pitchEnvelope > 0.1) {
-        //std::cout << "Operator: " << "Val " << val << " FM " << fm << std::endl;
-    }
+    float val = _signal->eval(_phase.advance(baseIncrement*_frequency*_ratio*pitchEnvelope)+fm-juce::MathConstants<float>::pi)*_amplitude;
     
     return val;
 }

@@ -48,10 +48,10 @@ class Wood : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
 
-    FMCarrier* _c1 = new FMCarrier();
-    FMCarrier* _c2 = new FMCarrier();
-    FMOperator* _m1 = new FMOperator();
-    FMOperator* _m2 = new FMOperator();
+    FMOperator* _c1;
+    FMOperator* _c2;
+    FMOperator* _m1;
+    FMOperator* _m2;
     
     juce::ADSR _adsr;
     juce::ADSR::Parameters _adsrParams {0.05, 0.2f, 0.0f, 0.1f};

@@ -10,7 +10,7 @@
 
 #include "DrumOscillator.h"
 
-DrumOscillator::DrumOscillator(FMCarrier* carrier, FMCarrier* impactCarrier) {
+DrumOscillator::DrumOscillator(FMOperator* carrier, FMOperator* impactCarrier) {
     _carrier = carrier;
     _impactCarrier = impactCarrier;
 }

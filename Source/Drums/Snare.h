@@ -52,8 +52,8 @@ class Snare : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
     
-    FMCarrier* _carrier = new FMCarrier();
-    FMCarrier* _impactCarrier = new FMCarrier(1.0f, 0.1f, FMSignalFunction::noise);
+    FMOperator* _carrier = new FMOperator();
+    FMOperator* _impactCarrier = new FMOperator(1.0f, 0.1f, FMSignalFunction::noise);
     FMOperator* _noiseOperator;
     FMOperator* _op1;
     DrumOscillator _drum;
@@ -62,7 +62,6 @@ class Snare : public juce::SynthesiserVoice {
     
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;
-    juce::Random _random;
     juce::dsp::Limiter<float> _limiter;
     juce::dsp::Compressor<float> _compressor;
     juce::dsp::NoiseGate<float> _gate;

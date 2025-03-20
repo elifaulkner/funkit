@@ -12,4 +12,3 @@
 
 #include "FMSignal.h"
 #include "FMOperator.h"
-#include "FMCarrier.h"

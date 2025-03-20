@@ -12,13 +12,17 @@
 
 #include <JuceHeader.h>
 
-enum FMSignalFunction {sin, square, noise};
+enum FMSignalFunction {sin, square, noise, saw};
 
 class FMSignal {
     public:
+    FMSignal();
+    ~FMSignal();
+    FMSignal(FMSignal& copy);
+    FMSignal& operator=(const FMSignal& other);
     void setFunction(FMSignalFunction function);
     float eval(float x);
     private:
     FMSignalFunction _function = FMSignalFunction::sin;
-    juce::Random _random;
+    juce::Random* _random;
 };

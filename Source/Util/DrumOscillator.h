@@ -15,7 +15,7 @@
 
 class DrumOscillator {
     public:
-    DrumOscillator(FMCarrier* carrier, FMCarrier* impactCarrier);
+    DrumOscillator(FMOperator* carrier, FMOperator* impactCarrier);
     ~DrumOscillator();
     void prepare(juce::dsp::ProcessSpec& spec);
     template <typename ProcessContext> void process (const ProcessContext& context) noexcept
@@ -56,8 +56,8 @@ class DrumOscillator {
     void reset();
     
     private:
-    FMCarrier* _carrier;
-    FMCarrier* _impactCarrier;
+    FMOperator* _carrier;
+    FMOperator* _impactCarrier;
     juce::dsp::ProcessSpec _spec;
     FMOperator* _noiseOperator;
     float _envelopeValue = 0.0;

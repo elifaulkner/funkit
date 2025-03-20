@@ -39,7 +39,6 @@ FunkitAudioProcessor::FunkitAudioProcessor()
     
     _woodSynth.addSound(new SynthSound());
     _woodSynth.addVoice(new Wood(_woodParameters, 0));
-    _woodSynth.addVoice(new Wood(_woodParameters, 0));
 }
 
 FunkitAudioProcessor::~FunkitAudioProcessor()
