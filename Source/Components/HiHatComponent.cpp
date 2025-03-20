@@ -64,9 +64,9 @@ void HiHatComponent::resized()
     
     _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
     _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
-    _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
     _delaySlider.setBounds(area.removeFromLeft(sliderWidth));
     _delayLevelSlider.setBounds(area.removeFromLeft(sliderWidth));
     _delayFeedbackSlider.setBounds(area.removeFromLeft(sliderWidth));

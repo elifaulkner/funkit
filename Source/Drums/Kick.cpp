@@ -17,8 +17,6 @@ Kick::Kick(KickParameters& parameters, int octave) :
         
         _carrier->addModulator(_op1);
         _carrier->addModulator(_noiseOperator);
-        
-        //_drum.setupCarriers(_carrier, _impactCarrier);
 }
 
 Kick::~Kick() {
@@ -129,6 +127,7 @@ void Kick::setUpParameters() {
     _noiseOperator->setAmplitude(_params.getNoiseLevel());
     _op1->setAmplitude(_params.getFMAmount());
     _impactCarrier->setAmplitude(_params.getImpact());
+    _drum.setImpactDecay(_params.getDecay()*0.33f);
 }
 
 void Kick::pitchWheelMoved (int newPitchWheelValue)

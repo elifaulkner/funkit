@@ -37,8 +37,8 @@ FunkitAudioProcessor::FunkitAudioProcessor()
     _hiHatSynth.addSound(new SynthSound());
     _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters , 0));
     
-    _woodSynth.addSound(new SynthSound());
-    _woodSynth.addVoice(new Wood(_woodParameters, 0));
+    //_woodSynth.addSound(new SynthSound());
+    //_woodSynth.addVoice(new Wood(_woodParameters, 0));
 }
 
 FunkitAudioProcessor::~FunkitAudioProcessor()
