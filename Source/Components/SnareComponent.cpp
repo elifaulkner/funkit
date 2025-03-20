@@ -72,8 +72,8 @@ void SnareComponent::resized()
     _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
     _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
     _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _impactSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
     _fmSlider.setBounds(area.removeFromLeft(sliderWidth));
     _reverbSlider.setBounds(area.removeFromLeft(sliderWidth));
     _reverbSizeSlider.setBounds(area.removeFromLeft(sliderWidth));
