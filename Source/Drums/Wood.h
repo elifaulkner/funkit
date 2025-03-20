@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    Snare.h
-    Created: 6 Feb 2025 2:10:26pm
+    Wood.h
+    Created: 17 Mar 2025 2:57:15pm
     Author:  Eli Faulkner
 
   ==============================================================================
@@ -14,32 +14,29 @@
 #include "../Util/DrumOscillator.h"
 #include "../Util/GlobalEffects.h"
 
-class SnareParameters {
+class WoodParameters {
     public:
-    SnareParameters(juce::AudioProcessorValueTreeState& apvts);
-    ~SnareParameters();
-    static std::vector<std::unique_ptr<juce::RangedAudioParameter>> getParameters();
-    float getDecay();
-    float getLevel();
-    float getDrive();
-    float getNoiseLevel();
-    float getReverb();
-    float getReverbSize();
-    float getShape();
-    float getImpact();
-    float getFMAmount();
+    WoodParameters(juce::AudioProcessorValueTreeState& apvts);
+    ~WoodParameters();
     int getNote();
-    float getNoiseGateThreshold();
+    float getDecay();
+    float getShape();
+    float getLevel();
+    float getCutoff();
+    float getReverbSize();
+    float getReverb();
+    float getRatioM1();
+    float getRatioM2();
     
+    static std::vector<std::unique_ptr<juce::RangedAudioParameter>> getParameters();
     private:
-
     juce::AudioProcessorValueTreeState& _apvts;
 };
 
-class Snare : public juce::SynthesiserVoice {
+class Wood : public juce::SynthesiserVoice {
     public:
-    Snare(GlobalEffects& global, SnareParameters& parameters, int octave);
-    ~Snare();
+    Wood(WoodParameters& parameters, int octave = 0);
+    ~Wood();
     bool canPlaySound (juce::SynthesiserSound *) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
     void stopNote (float velocity, bool allowTailOff) override;
@@ -48,29 +45,27 @@ class Snare : public juce::SynthesiserVoice {
     void pitchWheelMoved (int newPitchWheelValue) override;
     
     void prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputChannels);
-    
     private:
     bool _isPrepared = false;
+
+    FMOperator* _c1;
+    FMOperator* _c2;
+    FMOperator* _m1;
+    FMOperator* _m2;
     
-    FMOperator* _carrier = new FMOperator();
-    FMOperator* _impactCarrier = new FMOperator(1.0f, 0.1f, FMSignalFunction::noise);
-    FMOperator* _noiseOperator;
-    FMOperator* _op1;
-    DrumOscillator _drum;
-    
+    juce::ADSR _adsr;
+    juce::ADSR::Parameters _adsrParams {0.05, 0.2f, 0.0f, 0.1f};
+
     juce::AudioBuffer<float> _synthBuffer;
-    
+
     juce::dsp::Gain<float> _gain;
     juce::dsp::LadderFilter<float> _filter;
-    juce::dsp::Limiter<float> _limiter;
-    juce::dsp::Compressor<float> _compressor;
-    juce::dsp::NoiseGate<float> _gate;
-    juce::dsp::Reverb _reverb;
-    juce::dsp::Reverb::Parameters _reverbParameters;
-    int _octave = 0;
-    juce::dsp::ProcessSpec _spec;
+    juce::Reverb _reverb;
+    juce::Reverb::Parameters _reverbParameters;
     
-    SnareParameters& _params;
+    WoodParameters& _params;
+    int _octave = 0;
+    float _frequency = 0.0f;
     
     void setUpParameters();
 };

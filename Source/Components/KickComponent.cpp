@@ -20,6 +20,8 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     _driveSlider("Drive", apvts, "KICK_DRIVE"),
     _noiseSlider("Noise", apvts, "KICK_NOISE"),
     _shapeSlider("Shape", apvts, "KICK_SHAPE"),
+    _fmSlider("FM", apvts, "KICK_FM"),
+    _impactSlider("Impact", apvts, "KICK_IMPACT"),
     _trigger("Trigger (C2)")
 {
     addAndMakeVisible(_noteSlider);
@@ -29,6 +31,8 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     addAndMakeVisible(_noiseSlider);
     addAndMakeVisible(_shapeSlider);
     addAndMakeVisible(_trigger);
+    addAndMakeVisible(_impactSlider);
+    addAndMakeVisible(_fmSlider);
     
     _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     _label.setJustificationType(juce::Justification::centred);
@@ -62,9 +66,11 @@ void KickComponent::resized()
     _noteSlider.setBounds(area.removeFromLeft(sliderWidth));
     _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
     _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
+    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
     _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
     _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _impactSlider.setBounds(area.removeFromLeft(sliderWidth));
+    _fmSlider.setBounds(area.removeFromLeft(sliderWidth));
     
     _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
 }

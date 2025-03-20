@@ -11,9 +11,12 @@
 #include "Snare.h"
 
 Snare::Snare(GlobalEffects& global, SnareParameters& params, int octave) :
-    _octave(octave), _params(params)
+_drum(_carrier, _impactCarrier), _octave(octave), _params(params)
 {
-
+    _noiseOperator = new FMOperator(1.0f, 0.3f, FMSignalFunction::noise);
+    _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
+    _carrier->addModulator(_op1);
+    _carrier->addModulator(_noiseOperator);
 }
 
 Snare::~Snare() {
@@ -27,7 +30,6 @@ void Snare::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutput
     
     _drum.prepare(_spec);
     _drum.setDecay(_params.getDecay());
-    _drum.setNoiseLevel(_params.getNoiseLevel());
     
     _gain.prepare(_spec);
     _gain.setGainLinear(0.4f);
@@ -146,7 +148,8 @@ void Snare::pitchWheelMoved (int newPitchWheelValue)
 
 void Snare::setUpParameters() {
     _drum.setDecay(_params.getDecay());
-    _drum.setNoiseLevel(_params.getNoiseLevel());
+    _noiseOperator->setAmplitude(_params.getNoiseLevel());
+    _op1->setAmplitude(_params.getFMAmount());
     _drum.setDecayShape(_params.getShape());
     _gate.setThreshold(_params.getNoiseGateThreshold());
     _gain.setGainLinear(_params.getLevel());
@@ -155,6 +158,7 @@ void Snare::setUpParameters() {
     _reverbParameters.dryLevel = 1-_params.getReverb();
     _reverbParameters.roomSize = _params.getReverbSize();
     _reverb.setParameters(_reverbParameters);
+    _drum.setImpactDecay(_params.getImpact());
 }
 
 SnareParameters::SnareParameters(juce::AudioProcessorValueTreeState& apvts): _apvts(apvts){
@@ -176,7 +180,7 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_DRIVE", 1), "Snare Drive", juce::NormalisableRange<float> {1.00f, 10.0f, 1.0f}, 2.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_NOISE", 1), "Snare Noise", juce::NormalisableRange<float> {0.00f, 0.5f, 0.01f}, 0.3f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_NOISE", 1), "Snare Noise", juce::NormalisableRange<float> {0.00f, 0.25f, 0.00001f, 0.2f}, 0.01f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_REVERB", 1), "Snare Reverb", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     
@@ -185,6 +189,10 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> SnareParameters::getPar
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_GATE_THRESHOLD", 1), "Snare Gate Threshold", juce::NormalisableRange<float> {-50.0f, -1.0f, 0.1f, 0.3}, -40.0f));
     
     params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("SNARE_NOTE", 1), "Snare Note", 36, 48, 45));
+    
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_IMPACT", 1), "Snare Impact", juce::NormalisableRange<float> {0.0001f, 1.0f, 0.0001f, 0.25f}, 0.05f));
+
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SNARE_FM", 1), "Snare FM", juce::NormalisableRange<float> {0.0f, 1.0f, 0.001f, 0.25f}, 0.5f));
     
     return params;
 }
@@ -223,4 +231,12 @@ int SnareParameters::getNote() {
 
 float SnareParameters::getNoiseGateThreshold() {
     return _apvts.getRawParameterValue("SNARE_GATE_THRESHOLD")->load();
+}
+
+float SnareParameters::getImpact() {
+    return _apvts.getRawParameterValue("SNARE_IMPACT")->load();
+}
+
+float SnareParameters::getFMAmount() {
+    return _apvts.getRawParameterValue("SNARE_FM")->load();
 }

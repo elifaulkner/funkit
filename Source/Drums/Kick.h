@@ -23,6 +23,9 @@ class KickParameters {
     float getNoiseLevel();
     float getShape();
     int getNote();
+    float getFMAmount();
+    float getImpact();
+    
     private:
 
     juce::AudioProcessorValueTreeState& _apvts;
@@ -30,7 +33,7 @@ class KickParameters {
 
 class Kick : public juce::SynthesiserVoice {
     public:
-    Kick(GlobalEffects& global, KickParameters& parameters, int octave = 0);
+    Kick(KickParameters& parameters, int octave = 0);
     ~Kick();
     bool canPlaySound (juce::SynthesiserSound *) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound *sound, int currentPitchWheelPosition) override;
@@ -46,6 +49,11 @@ class Kick : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
 
+    FMOperator* _carrier = new FMOperator();
+    FMOperator* _impactCarrier = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
+    FMOperator* _noiseOperator;
+    FMOperator* _op1;
+    
     DrumOscillator _drum;
     
     juce::AudioBuffer<float> _synthBuffer;

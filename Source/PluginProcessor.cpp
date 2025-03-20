@@ -23,21 +23,22 @@ FunkitAudioProcessor::FunkitAudioProcessor()
                         ,_kickParameters(_apvts),
                         _snareParameters(_apvts),
                         _hiHatParameters(_apvts),
+                        _woodParameters(_apvts),
                         _globalParams(_apvts),
                         _global(_globalParams)
 #endif
 {
     _kickSynth.addSound(new SynthSound());
-    _kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
-    _kickSynth.addVoice(new Kick(_global, _kickParameters, 0));
+    _kickSynth.addVoice(new Kick(_kickParameters, 0));
 
     _snareSynth.addSound(new SynthSound());
-    _snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
     _snareSynth.addVoice(new Snare(_global, _snareParameters, 0));
     
     _hiHatSynth.addSound(new SynthSound());
     _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters , 0));
-    _hiHatSynth.addVoice(new HiHat(_global, _hiHatParameters, 0));
+    
+    _woodSynth.addSound(new SynthSound());
+    _woodSynth.addVoice(new Wood(_woodParameters, 0));
 }
 
 FunkitAudioProcessor::~FunkitAudioProcessor()
@@ -118,7 +119,7 @@ void FunkitAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     _kickSynth.setCurrentPlaybackSampleRate(sampleRate);
     _snareSynth.setCurrentPlaybackSampleRate(sampleRate);
     _hiHatSynth.setCurrentPlaybackSampleRate(sampleRate);    
-
+    _woodSynth.setCurrentPlaybackSampleRate(sampleRate);
     
     for(int i = 0; i < _kickSynth.getNumVoices(); i++) {
         if(auto voice = dynamic_cast<Kick*>(_kickSynth.getVoice(i))) {
@@ -134,6 +135,12 @@ void FunkitAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 
     for(int i = 0; i < _hiHatSynth.getNumVoices(); i++) {
         if(auto voice = dynamic_cast<HiHat*>(_hiHatSynth.getVoice(i))) {
+            voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+        }
+    }
+    
+    for(int i = 0; i < _woodSynth.getNumVoices(); i++) {
+        if(auto voice = dynamic_cast<Wood*>(_woodSynth.getVoice(i))) {
             voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
         }
     }
@@ -204,9 +211,16 @@ void FunkitAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
         }
     }
     
+    for(int i = 0; i < _woodSynth.getNumVoices(); ++i) {
+        if(auto snare = dynamic_cast<Wood*>(_woodSynth.getVoice(i))) {
+            // Snare parameters
+        }
+    }
+    
     _kickSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     _snareSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     _hiHatSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    _woodSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     
     juce::dsp::AudioBlock<float> audioBlock { buffer };
     //audioBlock.clear();
@@ -264,6 +278,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout FunkitAudioProcessor::create
     for(std::unique_ptr<juce::RangedAudioParameter>& p : HiHatParameters::getParameters()) {
         params.push_back(std::move(p));
     }
+    
+    for(std::unique_ptr<juce::RangedAudioParameter>& p : WoodParameters::getParameters()) {
+        params.push_back(std::move(p));
+    }
 
     for(std::unique_ptr<juce::RangedAudioParameter>& p : GlobalEffectsParameters::getParameters()) {
         params.push_back(std::move(p));
@@ -290,4 +308,9 @@ void FunkitAudioProcessor::triggerSnare(float velocity)
 void FunkitAudioProcessor::triggerHiHat(float velocity)
 {
     _hiHatSynth.noteOn(0, 42, velocity);
+}
+
+void FunkitAudioProcessor::triggerWood(float velocity)
+{
+    _woodSynth.noteOn(0, 43, velocity);
 }

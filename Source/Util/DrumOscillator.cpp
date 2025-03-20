@@ -10,14 +10,29 @@
 
 #include "DrumOscillator.h"
 
+DrumOscillator::DrumOscillator(FMOperator* carrier, FMOperator* impactCarrier) {
+    _carrier = carrier;
+    _impactCarrier = impactCarrier;
+}
+
+DrumOscillator::~DrumOscillator() {
+    delete _carrier;
+    delete _impactCarrier;
+}
+
 void DrumOscillator::prepare(juce::dsp::ProcessSpec& spec) {
     _spec = spec;
-    _phase.reset();
+    _carrier->prepare(spec);
+    _impactCarrier->prepare(spec);
 }
 
 void DrumOscillator::noteOn() {
     _envelopeCounter = 0;
+    _impactEnvelopeCounter = 0;
     _envelopeSamples = _decay*_spec.sampleRate;
+    _impactEnvelopeSamples = _impactDecay*_spec.sampleRate;
+    _carrier->reset();
+    _impactCarrier->reset();
 }
 
 void DrumOscillator::noteOff() {
@@ -26,11 +41,13 @@ void DrumOscillator::noteOff() {
 
 void DrumOscillator::reset() {
     _envelopeCounter = 0;
+    _impactEnvelopeCounter = 0;
 }
 
 void DrumOscillator::setFrequency(float frequency)
 {
-    _frequency = std::max(1.0f, frequency);
+    _carrier->setFrequency(frequency);
+    _impactCarrier->setFrequency(frequency);
 }
 
 void DrumOscillator::setDecay(float decay)
@@ -38,12 +55,9 @@ void DrumOscillator::setDecay(float decay)
     _decay = decay;
 }
 
-void DrumOscillator::setNoiseLevel(float noiseLevel) {
-    _noiseLevel = noiseLevel;
-}
-
-void DrumOscillator::setUseWave(bool value) {
-    _useWave = value;
+void DrumOscillator::setImpactDecay(float decay)
+{
+    _impactDecay = decay;
 }
 
 void DrumOscillator::setDecayShape(float shape) {
@@ -52,4 +66,8 @@ void DrumOscillator::setDecayShape(float shape) {
 
 void DrumOscillator::setVelocity(float velocity) {
     _velocity = velocity;
+}
+
+void DrumOscillator::setPitchEnvelope(bool pitchEnvelope) {
+    _pitchEnvelope = pitchEnvelope;
 }

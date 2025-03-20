@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    KickComponent.h
-    Created: 7 Feb 2025 11:18:21am
+    WoodComponent.h
+    Created: 17 Mar 2025 4:51:39pm
     Author:  Eli Faulkner
 
   ==============================================================================
@@ -11,35 +11,36 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "LabeledSlider.h"
-#include "Util/LabeledToggle.h"
 #include "../PluginProcessor.h"
+#include "LabeledSlider.h"
+
 //==============================================================================
 /*
 */
-class KickComponent  : public juce::Component, public juce::Button::Listener
+class WoodComponent  : public juce::Component, public juce::Button::Listener
 {
 public:
-    KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValueTreeState& apvts);
-    ~KickComponent() override;
+    WoodComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValueTreeState& apvts);
+    ~WoodComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    
     void buttonClicked (juce::Button *button) override;
     void buttonStateChanged (juce::Button* button) override;
 private:
     FunkitAudioProcessor& _processor;
-    juce::Label _label {"Kick", "Kick Drum"};
+    juce::Label _label {"Wood", "Wood Block"};
     LabeledSlider _noteSlider;
     LabeledSlider _levelSlider;
     LabeledSlider _decaySlider;
-    LabeledSlider _driveSlider;
-    LabeledSlider _noiseSlider;
     LabeledSlider _shapeSlider;
-    LabeledSlider _fmSlider;
-    LabeledSlider _impactSlider;
+    LabeledSlider _cutoffSlider;
+    LabeledSlider _ratioM1Slider;
+    LabeledSlider _ratioM2Slider;
+    LabeledSlider _reverbSlider;
+    LabeledSlider _reverbSizeSlider;
     
     juce::TextButton _trigger;
-    
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KickComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WoodComponent)
 };

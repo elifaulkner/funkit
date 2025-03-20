@@ -8,10 +8,11 @@
     <GROUP id="{3D010F12-4449-5F8C-3191-8695DDDBE984}" name="Source">
       <GROUP id="{6A380B03-5F60-97D7-3F5E-08AD1BF57FDA}" name="Util">
         <GROUP id="{52971DCB-00C7-3097-4821-C0EECC30D524}" name="FM">
-          <FILE id="EEkktg" name="FMCarrier.cpp" compile="1" resource="0" file="Source/Util/FM/FMCarrier.cpp"/>
-          <FILE id="dd6zTU" name="FMCarrier.h" compile="0" resource="0" file="Source/Util/FM/FMCarrier.h"/>
+          <FILE id="OOenyg" name="FMHeader.h" compile="0" resource="0" file="Source/Util/FM/FMHeader.h"/>
           <FILE id="WM3u7q" name="FMOperator.cpp" compile="1" resource="0" file="Source/Util/FM/FMOperator.cpp"/>
           <FILE id="A5BBTz" name="FMOperator.h" compile="0" resource="0" file="Source/Util/FM/FMOperator.h"/>
+          <FILE id="j76jYW" name="FMSignal.cpp" compile="1" resource="0" file="Source/Util/FM/FMSignal.cpp"/>
+          <FILE id="OGhcqS" name="FMSignal.h" compile="0" resource="0" file="Source/Util/FM/FMSignal.h"/>
         </GROUP>
         <FILE id="kt1ReB" name="Delay.cpp" compile="1" resource="0" file="Source/Util/Delay.cpp"/>
         <FILE id="iutbPS" name="Delay.h" compile="0" resource="0" file="Source/Util/Delay.h"/>
@@ -49,6 +50,9 @@
               file="Source/Components/SnareComponent.cpp"/>
         <FILE id="br9MMm" name="SnareComponent.h" compile="0" resource="0"
               file="Source/Components/SnareComponent.h"/>
+        <FILE id="iXR08N" name="WoodComponent.cpp" compile="1" resource="0"
+              file="Source/Components/WoodComponent.cpp"/>
+        <FILE id="n3lgER" name="WoodComponent.h" compile="0" resource="0" file="Source/Components/WoodComponent.h"/>
       </GROUP>
       <GROUP id="{87BBEEB9-4F6C-91DF-DF89-01DD099D3F33}" name="Drums">
         <FILE id="ngpsgm" name="HiHat.cpp" compile="1" resource="0" file="Source/Drums/HiHat.cpp"/>
@@ -57,6 +61,8 @@
         <FILE id="Bt3EMT" name="Kick.h" compile="0" resource="0" file="Source/Drums/Kick.h"/>
         <FILE id="NwGciI" name="Snare.cpp" compile="1" resource="0" file="Source/Drums/Snare.cpp"/>
         <FILE id="zEbpA7" name="Snare.h" compile="0" resource="0" file="Source/Drums/Snare.h"/>
+        <FILE id="k12Ndv" name="Wood.cpp" compile="1" resource="0" file="Source/Drums/Wood.cpp"/>
+        <FILE id="UcSall" name="Wood.h" compile="0" resource="0" file="Source/Drums/Wood.h"/>
       </GROUP>
       <FILE id="jOPouY" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
