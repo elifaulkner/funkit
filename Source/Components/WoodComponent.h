@@ -30,7 +30,7 @@ public:
     void buttonStateChanged (juce::Button* button) override;
 private:
     FunkitAudioProcessor& _processor;
-    juce::Label _label {"Wood", "Wood Block"};
+    juce::Label _label {"FM", "Percussive FM"};
     LabeledSlider _noteSlider;
     LabeledSlider _levelSlider;
     LabeledSlider _decaySlider;

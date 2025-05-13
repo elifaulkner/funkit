@@ -15,7 +15,7 @@
 
 class FMOperator {
     public:
-    FMOperator(float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sin);
+    FMOperator(juce::String name, float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sin);
     FMOperator(FMOperator& copy);
     ~FMOperator();
     FMOperator& operator=(const FMOperator& other);
@@ -31,6 +31,7 @@ class FMOperator {
     juce::dsp::ProcessSpec _spec;
     juce::dsp::Phase<float> _phase;
     std::list<FMOperator*> _modulators = {};
+    juce::String _name;
     double _frequency = 0;
     double _ratio = 0;
     double _amplitude  = 1.0f;

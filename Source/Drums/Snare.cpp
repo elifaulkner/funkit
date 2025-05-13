@@ -13,8 +13,8 @@
 Snare::Snare(GlobalEffects& global, SnareParameters& params, int octave) :
 _drum(_carrier, _impactCarrier), _octave(octave), _params(params)
 {
-    _noiseOperator = new FMOperator(1.0f, 0.3f, FMSignalFunction::noise);
-    _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
+    _noiseOperator = new FMOperator("Snare Noise", 1.0f, 0.3f, FMSignalFunction::noise);
+    _op1 = new FMOperator("Snare Modulator", 2.0f, 1.0f, FMSignalFunction::sin);
     _carrier->addModulator(_op1);
     _carrier->addModulator(_noiseOperator);
 }

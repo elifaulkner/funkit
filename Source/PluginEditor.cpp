@@ -15,11 +15,11 @@ FunkitAudioProcessorEditor::FunkitAudioProcessorEditor (FunkitAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (1000, 400);
+    setSize (1000, 500);
     addAndMakeVisible(_kick);
     addAndMakeVisible(_snare);
     addAndMakeVisible(_hiHat);
-    //addAndMakeVisible(_wood);
+    addAndMakeVisible(_wood);
     addAndMakeVisible(_global);
 }
 
@@ -36,9 +36,13 @@ void FunkitAudioProcessorEditor::paint (juce::Graphics& g)
 
 void FunkitAudioProcessorEditor::resized()
 {
-    _kick.setBounds(0, 0, 1000, 100);
-    _snare.setBounds(0, 100, 1000, 100);
-    _hiHat.setBounds(0, 200, 1000, 100);
-    //_wood.setBounds(0, 300, 1000, 100);
-    _global.setBounds(0, 300, 1000, 100);
+    auto area = getLocalBounds();
+    
+    int height = 100;
+        
+    _kick.setBounds(area.removeFromTop(height));
+    _snare.setBounds(area.removeFromTop(height));
+    _hiHat.setBounds(area.removeFromTop(height));
+    _wood.setBounds(area.removeFromTop(height));
+    _global.setBounds(area.removeFromTop(height));
 }

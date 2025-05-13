@@ -12,8 +12,8 @@
 
 Kick::Kick(KickParameters& parameters, int octave) :
     _drum(_carrier, _impactCarrier), _params(parameters), _octave(octave){
-        _noiseOperator = new FMOperator(1.0f, 1.0f, FMSignalFunction::noise);
-        _op1 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
+        _noiseOperator = new FMOperator("Kick Noise", 1.0f, 1.0f, FMSignalFunction::noise);
+        _op1 = new FMOperator("Kick Modulator", 2.0f, 1.0f, FMSignalFunction::sin);
         
         _carrier->addModulator(_op1);
         _carrier->addModulator(_noiseOperator);

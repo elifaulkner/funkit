@@ -49,7 +49,6 @@ class Wood : public juce::SynthesiserVoice {
     bool _isPrepared = false;
 
     FMOperator* _c1;
-    FMOperator* _c2;
     FMOperator* _m1;
     FMOperator* _m2;
     

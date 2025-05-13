@@ -52,8 +52,8 @@ class Snare : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
     
-    FMOperator* _carrier = new FMOperator();
-    FMOperator* _impactCarrier = new FMOperator(1.0f, 0.1f, FMSignalFunction::noise);
+    FMOperator* _carrier = new FMOperator("Snare Carrier", 1.0f, 1.0f, FMSignalFunction::sin);
+    FMOperator* _impactCarrier = new FMOperator("Snare Impact", 1.0f, 0.1f, FMSignalFunction::noise);
     FMOperator* _noiseOperator;
     FMOperator* _op1;
     DrumOscillator _drum;

@@ -48,6 +48,8 @@ float FMSignal::eval(float x) {
             return x < 0 ? -1 : 1;
         case FMSignalFunction::saw:
             return x/juce::MathConstants<float>::pi;
+        case FMSignalFunction::triangle:
+            return abs(x/juce::MathConstants<float>::pi)*2-1;
         default:
             return 0;
     }

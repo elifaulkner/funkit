@@ -12,18 +12,16 @@
 
 Wood::Wood(WoodParameters& parameters, int octave) : _params(parameters), _octave(octave) {
     _adsr.setParameters(_adsrParams);
-    _c1 = new FMOperator(0.5f, 1.0f, FMSignalFunction::sin);
-    _c2 = new FMOperator(2.0f, 1.0f, FMSignalFunction::sin);
-    _m1 = new FMOperator(3.25f, 1.0f, FMSignalFunction::sin);
-    _m2 = new FMOperator(0.5f, 1.0f, FMSignalFunction::sin);
+    _c1 = new FMOperator("Wood Carrier", 1.0f, 1.0f, FMSignalFunction::triangle);
+    _m1 = new FMOperator("Wood M1", 1.41, 1.0f, FMSignalFunction::saw);
+    _m2 = new FMOperator("Wood M2", 2.74, 1.0f, FMSignalFunction::saw);
     
+    _m1->addModulator(_m2);
     _c1->addModulator(_m1);
-    _c2->addModulator(_m2);
 }
 
 Wood::~Wood() {
     delete _c1;
-    delete _c2;
 }
 
 void Wood::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputChannels) {
@@ -33,7 +31,6 @@ void Wood::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputC
     spec.numChannels = numOutputChannels;
     
     _c1->prepare(spec);
-    _c2->prepare(spec);
     
     _adsr.setSampleRate(sampleRate);
     
@@ -73,9 +70,7 @@ void Wood::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound
         }
         _frequency = frequency;
         _c1->setFrequency(frequency);
-        _c2->setFrequency(frequency);
         _c1->reset();
-        _c2->reset();
         _adsr.noteOn();
         _reverb.reset();
     }
@@ -108,13 +103,11 @@ void Wood::renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startS
     for(int s = 0; s < numSamples; ++s) {
         float envelope = _adsr.getNextSample();
         _c1->setFrequency(_frequency);
-        _c2->setFrequency(_frequency);
         envelope = std::pow(envelope, shape);
         float c1Sample = _c1->nextSample(1.0f);
-        float c2Sample = _c2->nextSample(1.0f);
 
         for(int c = 0; c < outputBuffer.getNumChannels(); ++c) {
-            audioBlock.setSample(c, s, (c1Sample+c2Sample)*envelope);
+            audioBlock.setSample(c, s, c1Sample*envelope);
         }
     }
     
@@ -199,15 +192,15 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> WoodParameters::getPara
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_CUTOFF", 1), "Wood Filter Cutoff", juce::NormalisableRange<float> {10.00f, 7500.0f, 10.0f, .3f}, 7500.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M1", 1), "Wood FM Ratio M1", juce::NormalisableRange<float> {0.5f, 16.0f, 0.5f}, 5.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M1", 1), "Wood FM Ratio M1", juce::NormalisableRange<float> {0.5f, 8.0f, 0.01f}, 1.41f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M2", 1), "Wood FM Ratio M2", juce::NormalisableRange<float> {0.5f, 16.0f, 0.5f}, 0.5f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M2", 1), "Wood FM Ratio M2", juce::NormalisableRange<float> {0.5f, 8.0f, 0.01f}, 2.57f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_REVERB", 1), "Wood Reverb", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_REVERB_SIZE", 1), "Wood Reverb Size", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     
-    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("WOOD_NOTE", 1), "Wood Note", 60, 72, 57));
+    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("WOOD_NOTE", 1), "Wood Note", 48, 84, 72));
     
     return params;
 }
