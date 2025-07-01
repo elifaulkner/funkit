@@ -28,14 +28,25 @@ FMOperator::FMOperator(FMOperator& copy) {
 }
 
 FMOperator& FMOperator::operator=(const FMOperator& copy) {
+    if (this == &copy)
+        return *this;
+
+    delete _signal;
+    while (!_modulators.empty()) {
+        delete _modulators.front();
+        _modulators.pop_front();
+    }
+
     _ratio = copy._ratio;
     _amplitude = copy._amplitude;
     _frequency = copy._frequency;
-    _signal = copy._signal;
+    _signal = new FMSignal(*copy._signal);
     _spec = copy._spec;
-    for(auto m : copy._modulators) {
+
+    for (auto m : copy._modulators) {
         _modulators.push_back(new FMOperator(*m));
     }
+
     return *this;
 }
 
