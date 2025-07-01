@@ -12,9 +12,10 @@
 
 Wood::Wood(WoodParameters& parameters, int octave) : _params(parameters), _octave(octave) {
     _adsr.setParameters(_adsrParams);
-    _c1 = new FMOperator("Wood Carrier", 1.0f, 1.0f, FMSignalFunction::triangle);
-    _m1 = new FMOperator("Wood M1", 1.41, 1.0f, FMSignalFunction::saw);
-    _m2 = new FMOperator("Wood M2", 2.74, 1.0f, FMSignalFunction::saw);
+    // 808 clave style FM network - use sine waves and fixed modulator amplitudes
+    _c1 = new FMOperator("Wood Carrier", 1.0f, 1.0f, FMSignalFunction::sin);
+    _m1 = new FMOperator("Wood M1", 1.5f, 0.7f, FMSignalFunction::sin);
+    _m2 = new FMOperator("Wood M2", 3.0f, 0.5f, FMSignalFunction::sin);
     
     _m1->addModulator(_m2);
     _c1->addModulator(_m1);
@@ -36,10 +37,11 @@ void Wood::prepareToPlay (double sampleRate, int samplesPerBlock, int numOutputC
     
     _gain.prepare(spec);
     
-    _filter.setMode(juce::dsp::LadderFilterMode::LPF24);
-    _filter.setCutoffFrequencyHz(16000.0f);
+    _filter.setMode(juce::dsp::LadderFilterMode::BPF24);
+    // Band pass filter focuses the mid range typical of an 808 clave
+    _filter.setCutoffFrequencyHz(2000.0f);
     _filter.setDrive(1.0f);
-    _filter.setResonance(0.0f);
+    _filter.setResonance(0.7f);
     _filter.prepare(spec);
     _filter.setEnabled(true);
     
@@ -71,6 +73,7 @@ void Wood::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound
         _frequency = frequency;
         _c1->setFrequency(frequency);
         _c1->reset();
+        _adsr.reset();
         _adsr.noteOn();
         _reverb.reset();
     }
@@ -129,6 +132,7 @@ void Wood::setUpParameters() {
     _adsr.setParameters(_adsrParams);
     _gain.setGainLinear(_params.getLevel());
     _filter.setCutoffFrequencyHz(_params.getCutoff());
+    _filter.setResonance(0.7f);
     _m1->setRatio(_params.getRatioM1());
     _m2->setRatio(_params.getRatioM2());
     _reverbParameters.roomSize = _params.getReverbSize();
@@ -184,17 +188,17 @@ float WoodParameters::getReverbSize() {
 std::vector<std::unique_ptr<juce::RangedAudioParameter>> WoodParameters::getParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_DECAY", 1), "Wood Decay", juce::NormalisableRange<float> {0.01f, 0.5f, 0.01f}, 0.25f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_DECAY", 1), "Wood Decay", juce::NormalisableRange<float> {0.01f, 0.5f, 0.01f}, 0.15f));
 
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_SHAPE", 1), "Wood Shape", juce::NormalisableRange<float> {1.0f, 5.0f, 0.1f}, 1.0f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_LEVEL", 1), "Wood Level", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f, 0.4f}, 0.3f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_CUTOFF", 1), "Wood Filter Cutoff", juce::NormalisableRange<float> {10.00f, 7500.0f, 10.0f, .3f}, 7500.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_CUTOFF", 1), "Wood Filter Cutoff", juce::NormalisableRange<float> {500.0f, 4000.0f, 10.0f, .3f}, 2000.0f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M1", 1), "Wood FM Ratio M1", juce::NormalisableRange<float> {0.5f, 8.0f, 0.01f}, 1.41f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M1", 1), "Wood FM Ratio M1", juce::NormalisableRange<float> {0.5f, 8.0f, 0.01f}, 1.5f));
 
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M2", 1), "Wood FM Ratio M2", juce::NormalisableRange<float> {0.5f, 8.0f, 0.01f}, 2.57f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_FM_RATIO_M2", 1), "Wood FM Ratio M2", juce::NormalisableRange<float> {0.5f, 8.0f, 0.01f}, 3.0f));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WOOD_REVERB", 1), "Wood Reverb", juce::NormalisableRange<float> {0.00f, 1.0f, 0.01f}, 0.3f));
     

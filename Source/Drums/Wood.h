@@ -53,7 +53,8 @@ class Wood : public juce::SynthesiserVoice {
     FMOperator* _m2;
     
     juce::ADSR _adsr;
-    juce::ADSR::Parameters _adsrParams {0.05, 0.2f, 0.0f, 0.1f};
+    // Short envelope for a percussive attack
+    juce::ADSR::Parameters _adsrParams {0.001f, 0.15f, 0.0f, 0.05f};
 
     juce::AudioBuffer<float> _synthBuffer;
 
