@@ -24,6 +24,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     _impactSlider("Impact", apvts, "KICK_IMPACT"),
     _trigger("Trigger (C2)")
 {
+    _noteSlider.showAsNoteName();
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);

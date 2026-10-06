@@ -44,3 +44,20 @@ void LabeledSlider::resized()
     _label.setBounds(area.removeFromBottom(22));
     _slider.setBounds(area);
 }
+
+void LabeledSlider::showAsNoteName()
+{
+    _slider.textFromValueFunction = [](double value) {
+        return juce::MidiMessage::getMidiNoteName((int) std::round(value), true, true, 3);
+    };
+    _slider.valueFromTextFunction = [](const juce::String& text) {
+        for(int n = 0; n < 128; ++n) {
+            if(juce::MidiMessage::getMidiNoteName(n, true, true, 3).equalsIgnoreCase(text.trim())) {
+                return (double) n;
+            }
+        }
+        return text.getDoubleValue();
+    };
+    // Force the popup/text to refresh with the new formatting.
+    _slider.updateText();
+}

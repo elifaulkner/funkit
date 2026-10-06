@@ -25,6 +25,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    // Display the slider's value as a note name (e.g. "A1") while tuning. Value is a MIDI note number.
+    void showAsNoteName();
+
 private:
     juce::Slider _slider;
     juce::Label _label;

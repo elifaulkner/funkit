@@ -27,6 +27,7 @@ SnareComponent::SnareComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     _fmSlider("FM", apvts, "SNARE_FM"),
     _trigger("Trigger (D2)")
 {
+    _noteSlider.showAsNoteName();
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);

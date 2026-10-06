@@ -27,6 +27,7 @@ _reverbSizeSlider("Reverb Size", apvts, "WOOD_REVERB_SIZE")
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     addAndMakeVisible(_trigger);
+    _noteSlider.showAsNoteName();
     addAndMakeVisible(_noteSlider);
     addAndMakeVisible(_levelSlider);
     addAndMakeVisible(_decaySlider);
