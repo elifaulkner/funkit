@@ -17,6 +17,8 @@ FMOperator::FMOperator(juce::String name, float ratio, float amplitude, FMSignal
 }
 
 FMOperator::FMOperator(FMOperator& copy) {
+    _name = copy._name;
+
     _ratio = copy._ratio;
     _amplitude = copy._amplitude;
     _frequency = copy._frequency;

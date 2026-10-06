@@ -53,7 +53,17 @@ class Wood : public juce::SynthesiserVoice {
     FMOperator* _m2;
     
     juce::ADSR _adsr;
-    juce::ADSR::Parameters _adsrParams {0.05, 0.2f, 0.0f, 0.1f};
+    juce::ADSR::Parameters _adsrParams {0.001f, 0.1f, 0.0f, 0.02f};
+
+    float _indexEnv = 0.0f;
+    float _indexCoef = 0.99f;
+    float _pitchEnv = 1.0f;
+    float _pitchCoef = 0.99f;
+    float _clickEnv = 0.0f;
+    float _clickCoef = 0.99f;
+    float _clickLevel = 0.5f;
+    float _clickLast = 0.0f;
+    juce::Random _random;
 
     juce::AudioBuffer<float> _synthBuffer;
 
