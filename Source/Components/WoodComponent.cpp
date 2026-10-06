@@ -37,9 +37,7 @@ _reverbSizeSlider("Reverb Size", apvts, "WOOD_REVERB_SIZE")
     addAndMakeVisible(_reverbSlider);
     addAndMakeVisible(_reverbSizeSlider);
     
-    _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    _label.setJustificationType(juce::Justification::centred);
-    _label.setFont(22);
+    FunkitLookAndFeel::styleTitle(_label);
     addAndMakeVisible(_label);
     
     _trigger.addListener(this);
@@ -51,31 +49,14 @@ WoodComponent::~WoodComponent()
 
 void WoodComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colours::grey);
+    FunkitLookAndFeel::paintPanel(g, getLocalBounds());
 }
 
 void WoodComponent::resized()
 {
-    auto area = getLocalBounds();
-    
-    int labelHeight = 25;
-    
-    _label.setBounds(area.removeFromTop(labelHeight));
-    
-    int sliderWidth = 75;
-    
-    _noteSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
-    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _cutoffSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _ratioM1Slider.setBounds(area.removeFromLeft(sliderWidth));
-    _ratioM2Slider.setBounds(area.removeFromLeft(sliderWidth));
-    _reverbSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _reverbSizeSlider.setBounds(area.removeFromLeft(sliderWidth));
-    
-    _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
-
+    FunkitLookAndFeel::layoutSection(getLocalBounds(), _label, &_trigger,
+        { &_noteSlider, &_levelSlider, &_decaySlider, &_shapeSlider, &_cutoffSlider,
+          &_ratioM1Slider, &_ratioM2Slider, &_reverbSlider, &_reverbSizeSlider });
 }
 
 void WoodComponent::buttonClicked (juce::Button *button) {

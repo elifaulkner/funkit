@@ -27,9 +27,7 @@ _saturationSlider("Saturation", apvts, "GLOBAL_SATURATION_LEVEL")
     addAndMakeVisible(_resonanceSlider);
     addAndMakeVisible(_saturationSlider);
     
-    _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    _label.setJustificationType(juce::Justification::centred);
-    _label.setFont(22);
+    FunkitLookAndFeel::styleTitle(_label);
     
     addAndMakeVisible(_label);
 }
@@ -40,23 +38,12 @@ GlobalEffectsComponent::~GlobalEffectsComponent()
 
 void GlobalEffectsComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colours::grey);  
+    FunkitLookAndFeel::paintPanel(g, getLocalBounds());
 }
 
 void GlobalEffectsComponent::resized()
 {
-    auto area = getLocalBounds();
-    
-    int labelHeight = 25;
-    
-    _label.setBounds(area.removeFromTop(labelHeight));
-    
-    int sliderWidth = 75;
-    
-    _delaySlider.setBounds(area.removeFromLeft(sliderWidth));
-    _delayLevelSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _delayFeedbackSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _cutoffSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _resonanceSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _saturationSlider.setBounds(area.removeFromLeft(sliderWidth));
+    FunkitLookAndFeel::layoutSection(getLocalBounds(), _label, nullptr,
+        { &_delaySlider, &_delayLevelSlider, &_delayFeedbackSlider,
+          &_cutoffSlider, &_resonanceSlider, &_saturationSlider });
 }

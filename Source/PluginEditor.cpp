@@ -15,6 +15,8 @@ FunkitAudioProcessorEditor::FunkitAudioProcessorEditor (FunkitAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
+    setLookAndFeel(&_lookAndFeel);
+    setLookAndFeel(&_lookAndFeel);
     setSize (1000, 500);
     addAndMakeVisible(_kick);
     addAndMakeVisible(_snare);
@@ -25,20 +27,20 @@ FunkitAudioProcessorEditor::FunkitAudioProcessorEditor (FunkitAudioProcessor& p)
 
 FunkitAudioProcessorEditor::~FunkitAudioProcessorEditor()
 {
+    setLookAndFeel(nullptr);
 }
 
 //==============================================================================
 void FunkitAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (juce::Colours::grey);
+    FunkitLookAndFeel::paintBackground(g, getLocalBounds());
 }
 
 void FunkitAudioProcessorEditor::resized()
 {
     auto area = getLocalBounds();
     
-    int height = 100;
+    int height = getHeight() / 5;
         
     _kick.setBounds(area.removeFromTop(height));
     _snare.setBounds(area.removeFromTop(height));

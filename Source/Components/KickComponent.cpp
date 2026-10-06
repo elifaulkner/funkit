@@ -34,9 +34,7 @@ KickComponent::KickComponent(FunkitAudioProcessor& ap, juce::AudioProcessorValue
     addAndMakeVisible(_impactSlider);
     addAndMakeVisible(_fmSlider);
     
-    _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    _label.setJustificationType(juce::Justification::centred);
-    _label.setFont(22);
+    FunkitLookAndFeel::styleTitle(_label);
     
     _trigger.addListener(this);
     
@@ -50,29 +48,14 @@ KickComponent::~KickComponent()
 
 void KickComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colours::grey);
+    FunkitLookAndFeel::paintPanel(g, getLocalBounds());
 }
 
 void KickComponent::resized()
 {
-    auto area = getLocalBounds();
-    
-    int labelHeight = 25;
-    
-    _label.setBounds(area.removeFromTop(labelHeight));
-    
-    int sliderWidth = 75;
-    
-    _noteSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
-    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _impactSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _fmSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
-
-    _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
+    FunkitLookAndFeel::layoutSection(getLocalBounds(), _label, &_trigger,
+        { &_noteSlider, &_levelSlider, &_decaySlider, &_shapeSlider,
+          &_impactSlider, &_noiseSlider, &_fmSlider, &_driveSlider });
 }
 
 void KickComponent::buttonClicked (juce::Button *button) {

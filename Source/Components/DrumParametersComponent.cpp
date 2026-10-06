@@ -27,7 +27,7 @@ DrumParametersComponent::~DrumParametersComponent()
 
 void DrumParametersComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colours::grey);
+    FunkitLookAndFeel::paintPanel(g, getLocalBounds());
 }
 
 void DrumParametersComponent::resized()

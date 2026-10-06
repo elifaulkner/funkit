@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "Components/Util/FunkitLookAndFeel.h"
 #include "Components/KickComponent.h"
 #include "Components/SnareComponent.h"
 #include "Components/HiHatComponent.h"
@@ -32,6 +33,8 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     FunkitAudioProcessor& audioProcessor;
+
+    FunkitLookAndFeel _lookAndFeel;
 
     KickComponent _kick;
     SnareComponent _snare;

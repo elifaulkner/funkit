@@ -34,9 +34,7 @@ HiHatComponent::HiHatComponent(FunkitAudioProcessor& ap, juce::AudioProcessorVal
     addAndMakeVisible(_delayLevelSlider);
     addAndMakeVisible(_delayFeedbackSlider);
     
-    _label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    _label.setJustificationType(juce::Justification::centred);
-    _label.setFont(22);
+    FunkitLookAndFeel::styleTitle(_label);
     
     _trigger.addListener(this);
     
@@ -49,29 +47,14 @@ HiHatComponent::~HiHatComponent()
 
 void HiHatComponent::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colours::grey);
+    FunkitLookAndFeel::paintPanel(g, getLocalBounds());
 }
 
 void HiHatComponent::resized()
 {
-    auto area = getLocalBounds();
-    
-    int labelHeight = 25;
-    
-    _label.setBounds(area.removeFromTop(labelHeight));
-    
-    int sliderWidth = 75;
-    
-    _levelSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _decaySlider.setBounds(area.removeFromLeft(sliderWidth));
-    _shapeSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _noiseSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _driveSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _delaySlider.setBounds(area.removeFromLeft(sliderWidth));
-    _delayLevelSlider.setBounds(area.removeFromLeft(sliderWidth));
-    _delayFeedbackSlider.setBounds(area.removeFromLeft(sliderWidth));
-    
-    _trigger.setBounds(850, 40, _trigger.getBestWidthForHeight(40), 40);
+    FunkitLookAndFeel::layoutSection(getLocalBounds(), _label, &_trigger,
+        { &_levelSlider, &_decaySlider, &_shapeSlider, &_noiseSlider,
+          &_driveSlider, &_delaySlider, &_delayLevelSlider, &_delayFeedbackSlider });
 }
 
 void HiHatComponent::buttonClicked (juce::Button *button) {
