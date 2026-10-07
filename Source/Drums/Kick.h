@@ -49,7 +49,7 @@ class Kick : public juce::SynthesiserVoice {
     private:
     bool _isPrepared = false;
 
-    FMOperator* _carrier = new FMOperator("Kick Carrier", 1.0f, 1.0f, FMSignalFunction::sin);
+    FMOperator* _carrier = new FMOperator("Kick Carrier", 1.0f, 1.0f, FMSignalFunction::sine);
     FMOperator* _impactCarrier = new FMOperator("Kick Impact", 1.0f, 1.0f, FMSignalFunction::noise);
     FMOperator* _noiseOperator;
     FMOperator* _op1;

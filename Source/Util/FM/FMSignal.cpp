@@ -40,7 +40,7 @@ void FMSignal::setFunction(FMSignalFunction function) {
 
 float FMSignal::eval(float x) {
     switch(_function) {
-        case FMSignalFunction::sin:
+        case FMSignalFunction::sine:
             return std::sin(x);
         case FMSignalFunction::noise:
             return _random->nextDouble()*2-1;
