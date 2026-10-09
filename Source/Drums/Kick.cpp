@@ -191,7 +191,7 @@ std::vector<std::unique_ptr<juce::RangedAudioParameter>> KickParameters::getPara
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_NOISE", 1), "Kick Noise", juce::NormalisableRange<float> {0.00f, 0.25f, 0.00001f, 0.2f}, 0.01f));
 
     
-    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("KICK_NOTE", 1), "Kick Note", 24, 36, 33));
+    params.push_back(std::make_unique<juce::AudioParameterInt>(juce::ParameterID("KICK_NOTE", 1), "Kick Note", 24, 48, 33));
     
     params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("KICK_IMPACT", 1), "Kick Impact", juce::NormalisableRange<float> {0.0001f, 1.0f, 0.0001f, 0.25f}, 0.05f));
 
