@@ -15,7 +15,7 @@
 
 class FMOperator {
     public:
-    FMOperator(juce::String name, float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sin);
+    FMOperator(juce::String name, float ratio = 1.0f, float amplitude = 1.0f, FMSignalFunction function = FMSignalFunction::sine);
     FMOperator(FMOperator& copy);
     ~FMOperator();
     FMOperator& operator=(const FMOperator& other);

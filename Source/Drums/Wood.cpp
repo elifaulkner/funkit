@@ -12,9 +12,9 @@
 
 Wood::Wood(WoodParameters& parameters, int octave) : _params(parameters), _octave(octave) {
     _adsr.setParameters(_adsrParams);
-    _c1 = new FMOperator("Wood Carrier", 1.0f, 1.0f, FMSignalFunction::sin);
-    _m1 = new FMOperator("Wood M1", 2.3, 1.0f, FMSignalFunction::sin);
-    _m2 = new FMOperator("Wood M2", 1.7, 0.5f, FMSignalFunction::sin);
+    _c1 = new FMOperator("Wood Carrier", 1.0f, 1.0f, FMSignalFunction::sine);
+    _m1 = new FMOperator("Wood M1", 2.3, 1.0f, FMSignalFunction::sine);
+    _m2 = new FMOperator("Wood M2", 1.7, 0.5f, FMSignalFunction::sine);
     
     _m1->addModulator(_m2);
     _c1->addModulator(_m1);
